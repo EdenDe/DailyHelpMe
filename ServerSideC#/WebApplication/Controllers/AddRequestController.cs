@@ -39,6 +39,49 @@ namespace WebApplication.Controllers
         }
 
 
+
+        [Route("addTask")]
+        [HttpPost]
+        public IHttpActionResult taskAdd([FromBody] EditRequest taskssssssss)
+        {
+            try
+            {
+                DailyHelpMeDbContext db = new DailyHelpMeDbContext();
+
+                Tasks tasks = taskssssssss.NewTasks[0];
+
+                //request.Task.ForEach(task =>
+                //{
+
+                Task task = new Task();
+
+                task.TaskName = tasks.TaskName;
+                task.TaskDescription = tasks.TaskDescription;
+                task.NumOfVulRequired = tasks.NumOfVulRequired;
+                task.Confirmation = tasks.Confirmation;
+                task.CityCode = tasks.CityCode;
+                task.Lat = tasks.Lat;
+                task.Lng = tasks.Lng;
+                task.TaskHour = tasks.TaskHour;
+                task.RequestCode = tasks.RequestCode;
+
+             
+                 
+                    db.Task.Add(task);
+
+
+                db.SaveChanges();
+
+                return Ok("YES");
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
+
+
         [Route("addRequest")]
         [HttpPost]
         public IHttpActionResult Post([FromBody] EditRequest requestEdit)
@@ -76,19 +119,17 @@ namespace WebApplication.Controllers
                 req.ID = request.ID;
                 req.RequestStatus = "פעיל";
                 req.PrivateRequest = request.RequestNew ? request.PrivateRequest : req.PrivateRequest;
-                req.Link = request.RequestNew ? link : req.RequestName;
+                req.Link = request.RequestNew ? link : req.Link;
 
                 if (request.RequestNew)
                 {
-                    requestList.Add(req);
+                    db.Request.Add(req);
                 }
 
                 db.SaveChanges();
 
                 foreach (var tasks in request.Task)
                 {
-
-
                     //request.Task.ForEach(task =>
                     //{
                     Task task = new Task();
@@ -105,24 +146,22 @@ namespace WebApplication.Controllers
                     task.Lat = tasks.Lat;
                     task.Lng = tasks.Lng;
                     task.TaskHour = tasks.TaskHour;
-                    task.RequestCode = req.RequestCode;
+                    task.RequestCode = tasks.RequestCode;
+                 
 
                     if (tasks.New)
                     {
-                        db.Task.Add(task);
+                        //task.RequestCode = 44;
+                        //db.Task.Add(task);
+
+                        req.Task.Add(task);
                     }
 
                     db.SaveChanges();
 
-                    List<TaskTypes> typesToRemoveTask = new List<TaskTypes>();
-                    List<string> typesToAdd = new List<string>();
-                    List<DateTime> datesToAdd = new List<DateTime>();
-                    List<DateTime> datesToRemove = new List<DateTime>();
-
-
                     tasks.TypesList.ForEach(type =>
                     {
-                        if (!task.TaskTypes.Any(x => x.VolunteerType.VolunteerName != type) || tasks.New)
+                        if (!task.TaskTypes.Any(x => x.VolunteerType.VolunteerName == type) || tasks.New)
                         {
                             db.TaskTypes.Add(new TaskTypes
                             {
@@ -132,21 +171,7 @@ namespace WebApplication.Controllers
                         }
 
                     });
-
-                    //task.TaskTypes.ToList().ForEach(type => {
-                    ////    if (!tasks.TypesList.Contains(type.VolunteerType.VolunteerName)) {
-                    ////        typesToAdd.Add(type.VolunteerType.VolunteerName);
-                    ////    }                   
-                    //});
-
-                    //tasks.TypesList.ForEach(type => {
-                    //    if (task.TaskTypes.Any(x => x.VolunteerType.VolunteerName != type)) {
-
-                    //        typesToRemoveTask.Add(type);
-                    //    }
-
-                    //});
-
+           
                     foreach (var date in tasks.DatesForTask)
                     {
 
@@ -168,32 +193,41 @@ namespace WebApplication.Controllers
                                 TaskDate = date
                             });
                         }
-                    }
 
-                    List<TaskInDates> taskDatesToRemove = new List<TaskInDates>();
+                    }
 
                     if (!tasks.New)
                     {
                         task.TaskInDates.Where(x => !tasks.DatesForTask.Contains(x.TaskDate)).ToList().ForEach(x =>
                         {
-                           // taskDatesToRemove.Add(x);
                             task.TaskInDates.Remove(x);
                         });
 
-                        task.TaskTypes.Where(type => !tasks.TypesList.Contains(type.VolunteerType.VolunteerName)).ToList().ForEach(x => {
-
-                            //typesToRemoveTask.Add(x);
+                        task.TaskTypes.Where(type => !tasks.TypesList.Contains(type.VolunteerType.VolunteerName)).ToList().ForEach(x =>
+                        {
                             task.TaskTypes.Remove(x);
-
                         });
-                                               
                     }
+                }
+
+                foreach (var item in requestEdit.TaskToRemove)
+                {
+                     db.TaskInDates.Where(task => task.TaskNumber == item.TaskNumber).ToList().ForEach(x=> {
+                         db.TaskInDates.Remove(x);                   
+                     });
+
+                    db.TaskTypes.Where(x => x.TaskNumber == item.TaskNumber).ToList().ForEach(x => {
+                        db.TaskTypes.Remove(x);
+                    });
+
+                    db.SaveChanges();
+                    db.Task.Remove(db.Task.FirstOrDefault(x => x.TaskNumber == item.TaskNumber));
                 }
 
                 db.SaveChanges();
 
-                // return Ok(new { Status = "OK", Link = link });
-                return Ok(req);
+                return Ok(new { Status = "OK", Link = req.Link });
+                // return Ok(req);
 
 
             }

@@ -77,20 +77,29 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="bin/Antlr3.Runtime.pdb">
       <publishTime>09/10/2013 17:29:20</publishTime>
     </File>
+    <File Include="bin/BouncyCastle.Crypto.dll">
+      <publishTime>10/19/2021 11:53:32</publishTime>
+    </File>
     <File Include="bin/DailyHelpMe.dll">
-      <publishTime>05/30/2022 15:26:16</publishTime>
+      <publishTime>06/20/2022 19:06:27</publishTime>
     </File>
     <File Include="bin/DailyHelpMe.dll.config">
       <publishTime>04/28/2022 13:32:32</publishTime>
     </File>
     <File Include="bin/DailyHelpMe.pdb">
-      <publishTime>05/30/2022 15:26:16</publishTime>
+      <publishTime>06/20/2022 19:06:27</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>04/16/2020 20:38:42</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>04/16/2020 20:38:56</publishTime>
+    </File>
+    <File Include="bin/MailKit.dll">
+      <publishTime>06/12/2022 02:12:46</publishTime>
+    </File>
+    <File Include="bin/MailKit.pdb">
+      <publishTime>06/12/2022 02:12:46</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNetCore.Authentication.Abstractions.dll">
       <publishTime>11/12/2018 17:29:06</publishTime>
@@ -178,6 +187,12 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>07/25/2012 12:48:56</publishTime>
+    </File>
+    <File Include="bin/MimeKit.dll">
+      <publishTime>06/11/2022 19:02:54</publishTime>
+    </File>
+    <File Include="bin/MimeKit.pdb">
+      <publishTime>06/11/2022 19:02:54</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>04/22/2019 02:06:16</publishTime>
@@ -330,7 +345,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/08/2018 13:18:16</publishTime>
     </File>
     <File Include="bin/System.Buffers.dll">
-      <publishTime>05/15/2018 13:29:34</publishTime>
+      <publishTime>02/19/2020 10:05:18</publishTime>
     </File>
     <File Include="bin/System.ComponentModel.Annotations.dll">
       <publishTime>05/15/2018 13:29:36</publishTime>
@@ -339,22 +354,25 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>05/15/2018 13:29:40</publishTime>
     </File>
     <File Include="bin/System.Memory.dll">
-      <publishTime>06/06/2018 13:29:04</publishTime>
+      <publishTime>02/19/2020 10:05:18</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>11/28/2018 15:00:36</publishTime>
     </File>
     <File Include="bin/System.Numerics.Vectors.dll">
-      <publishTime>07/19/2017 10:01:36</publishTime>
+      <publishTime>05/15/2018 13:29:44</publishTime>
     </File>
     <File Include="bin/System.Runtime.CompilerServices.Unsafe.dll">
-      <publishTime>06/06/2018 13:29:04</publishTime>
+      <publishTime>02/19/2020 10:05:16</publishTime>
+    </File>
+    <File Include="bin/System.Text.Encoding.CodePages.dll">
+      <publishTime>11/29/2018 15:39:18</publishTime>
     </File>
     <File Include="bin/System.Text.Encodings.Web.dll">
       <publishTime>05/15/2018 13:29:52</publishTime>
     </File>
     <File Include="bin/System.Threading.Tasks.Extensions.dll">
-      <publishTime>06/06/2018 13:29:04</publishTime>
+      <publishTime>02/19/2020 10:05:18</publishTime>
     </File>
     <File Include="bin/System.Web.Cors.dll">
       <publishTime>11/28/2018 14:58:44</publishTime>
@@ -390,10 +408,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/28/2018 15:04:24</publishTime>
     </File>
     <File Include="bin/WebApplication.dll">
-      <publishTime>06/06/2022 10:45:56</publishTime>
+      <publishTime>06/20/2022 19:06:27</publishTime>
     </File>
     <File Include="bin/WebApplication.pdb">
-      <publishTime>06/06/2022 10:45:56</publishTime>
+      <publishTime>06/20/2022 19:06:27</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>01/23/2014 15:57:34</publishTime>
@@ -446,6 +464,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Global.asax">
       <publishTime>03/13/2022 16:58:58</publishTime>
     </File>
+    <File Include="libman.json">
+      <publishTime>06/17/2022 11:38:44</publishTime>
+    </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>03/13/2022 16:58:58</publishTime>
     </File>
@@ -489,7 +510,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/13/2022 16:58:58</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/18/2022 11:14:36</publishTime>
+      <publishTime>06/20/2022 19:06:28</publishTime>
     </File>
   </ItemGroup>
 </Project>

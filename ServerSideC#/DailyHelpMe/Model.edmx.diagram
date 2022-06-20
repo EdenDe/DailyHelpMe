@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bef073d792474f85883e45ab49fb4d1d" Name="Diagram1">
+        <EntityTypeShape EntityType="bgroup86_prodModel.City" Width="1.5" PointX="8" PointY="16.875" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.Dates" Width="1.5" PointX="12.5" PointY="18.875" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.InterestedInRegistered" Width="1.5" PointX="13.25" PointY="13.5" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.RegisteredTo" Width="1.5" PointX="15.625" PointY="14.625" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.Report" Width="1.5" PointX="8.125" PointY="12.875" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.ReportType" Width="1.5" PointX="9.125" PointY="10.875" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.Request" Width="1.5" PointX="5.75" PointY="17.75" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.Task" Width="1.5" PointX="10.125" PointY="16.75" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.TaskInDates" Width="1.5" PointX="14.625" PointY="18" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.TaskTypes" Width="1.5" PointX="12.375" PointY="16.5" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.Users" Width="1.5" PointX="5.75" PointY="11.625" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.VolTypesPreferences" Width="1.5" PointX="10.625" PointY="13.5" />
+        <EntityTypeShape EntityType="bgroup86_prodModel.VolunteerType" Width="1.5" PointX="11.25" PointY="10.875" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__Task__CityCode__01BE3717" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__Users__CityCode__15FA39EE" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__TaskInDat__TaskD__049AA3C2" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__Intereste__TaskD__11F49EE0" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__InterestedIn__ID__11007AA7" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__Registere__TaskD__095F58DF" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__RegisteredTo__ID__086B34A6" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__Report__IDUserMa__1ABEEF0B" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__Report__IDUserRe__1BB31344" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__Report__ReportTy__19CACAD2" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__Request__ID__7A1D154F" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__Task__RequestCod__00CA12DE" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__TaskInDat__TaskN__058EC7FB" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__TaskTypes__TaskN__0E240DFC" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__TaskTypes__Volun__0D2FE9C3" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__VolTypesPref__ID__3EFC4F81" />
+        <AssociationConnector Association="bgroup86_prodModel.FK__VolTypesP__Volun__3E082B48" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

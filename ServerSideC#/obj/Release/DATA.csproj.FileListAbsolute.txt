@@ -1,0 +1,12 @@
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\bin\Release\DailyHelpMe.dll.config
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\bin\Release\DailyHelpMe.dll
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\bin\Release\DailyHelpMe.pdb
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\bin\Release\EntityFramework.dll
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\bin\Release\EntityFramework.xml
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\obj\Release\DATA.csprojAssemblyReference.cache
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\obj\Release\DATA.csproj.CoreCompileInputs.cache
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\obj\Release\DATA.csproj.CopyComplete
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\obj\Release\DailyHelpMe.dll
+C:\Users\משתמש\Desktop\DailyHelpMe\DailyHelpMe\DailyHelpMe\obj\Release\DailyHelpMe.pdb

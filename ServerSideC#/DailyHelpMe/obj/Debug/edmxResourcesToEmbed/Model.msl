@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bgroup86_prodModelStoreContainer" CdmEntityContainer="DailyHelpMeDbContext">
+    <EntitySetMapping Name="City">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dates">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.Dates">
+        <MappingFragment StoreEntitySet="Dates">
+          <ScalarProperty Name="Date" ColumnName="Date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InterestedInRegistered">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.InterestedInRegistered">
+        <MappingFragment StoreEntitySet="InterestedInRegistered">
+          <ScalarProperty Name="SignToTaskTime" ColumnName="SignToTaskTime" />
+          <ScalarProperty Name="TaskDateNum" ColumnName="TaskDateNum" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="InterestedInRegisteredNum" ColumnName="InterestedInRegisteredNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RegisteredTo">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.RegisteredTo">
+        <MappingFragment StoreEntitySet="RegisteredTo">
+          <ScalarProperty Name="RatingTime" ColumnName="RatingTime" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+          <ScalarProperty Name="RegisterStatus" ColumnName="RegisterStatus" />
+          <ScalarProperty Name="Recommendation" ColumnName="Recommendation" />
+          <ScalarProperty Name="TaskDateNum" ColumnName="TaskDateNum" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TaskRegisteredNum" ColumnName="TaskRegisteredNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Report">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.Report">
+        <MappingFragment StoreEntitySet="Report">
+          <ScalarProperty Name="TreatmentType" ColumnName="TreatmentType" />
+          <ScalarProperty Name="IDUserReportedOn" ColumnName="IDUserReportedOn" />
+          <ScalarProperty Name="IDUserMadeReport" ColumnName="IDUserMadeReport" />
+          <ScalarProperty Name="ReportTypeCode" ColumnName="ReportTypeCode" />
+          <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
+          <ScalarProperty Name="ReportContent" ColumnName="ReportContent" />
+          <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ReportType">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.ReportType">
+        <MappingFragment StoreEntitySet="ReportType">
+          <ScalarProperty Name="ReportTypeName" ColumnName="ReportTypeName" />
+          <ScalarProperty Name="ReportTypeCode" ColumnName="ReportTypeCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Request">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.Request">
+        <MappingFragment StoreEntitySet="Request">
+          <ScalarProperty Name="RequestStatus" ColumnName="RequestStatus" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Link" ColumnName="Link" />
+          <ScalarProperty Name="PrivateRequest" ColumnName="PrivateRequest" />
+          <ScalarProperty Name="RequestName" ColumnName="RequestName" />
+          <ScalarProperty Name="RequestCode" ColumnName="RequestCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Task">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.Task">
+        <MappingFragment StoreEntitySet="Task">
+          <ScalarProperty Name="Lng" ColumnName="Lng" />
+          <ScalarProperty Name="Lat" ColumnName="Lat" />
+          <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+          <ScalarProperty Name="RequestCode" ColumnName="RequestCode" />
+          <ScalarProperty Name="NumOfVulRequired" ColumnName="NumOfVulRequired" />
+          <ScalarProperty Name="Confirmation" ColumnName="Confirmation" />
+          <ScalarProperty Name="TaskHour" ColumnName="TaskHour" />
+          <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+          <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+          <ScalarProperty Name="TaskNumber" ColumnName="TaskNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaskInDates">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.TaskInDates">
+        <MappingFragment StoreEntitySet="TaskInDates">
+          <ScalarProperty Name="TaskNumber" ColumnName="TaskNumber" />
+          <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
+          <ScalarProperty Name="TaskDateNum" ColumnName="TaskDateNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TaskTypes">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.TaskTypes">
+        <MappingFragment StoreEntitySet="TaskTypes">
+          <ScalarProperty Name="Dummy" ColumnName="Dummy" />
+          <ScalarProperty Name="TaskNumber" ColumnName="TaskNumber" />
+          <ScalarProperty Name="VolunteerCode" ColumnName="VolunteerCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Rank" ColumnName="Rank" />
+          <ScalarProperty Name="TokenID" ColumnName="TokenID" />
+          <ScalarProperty Name="UserDescription" ColumnName="UserDescription" />
+          <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+          <ScalarProperty Name="TotalRate" ColumnName="TotalRate" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="UStatus" ColumnName="UStatus" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Passwords" ColumnName="Passwords" />
+          <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VolTypesPreferences">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.VolTypesPreferences">
+        <MappingFragment StoreEntitySet="VolTypesPreferences">
+          <ScalarProperty Name="Dummy" ColumnName="Dummy" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="VolunteerCode" ColumnName="VolunteerCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VolunteerType">
+      <EntityTypeMapping TypeName="bgroup86_prodModel.VolunteerType">
+        <MappingFragment StoreEntitySet="VolunteerType">
+          <ScalarProperty Name="VolunteerName" ColumnName="VolunteerName" />
+          <ScalarProperty Name="VolunteerCode" ColumnName="VolunteerCode" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

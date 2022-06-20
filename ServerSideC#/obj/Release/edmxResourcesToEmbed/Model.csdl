@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bgroup86_prodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityCode" />
+    </Key>
+    <Property Name="CityCode" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Street" Relationship="Self.FK__Street__CityCode__035179CE" FromRole="City" ToRole="Street" />
+  </EntityType>
+  <EntityType Name="RegisteredTo">
+    <Key>
+      <PropertyRef Name="ID" />
+      <PropertyRef Name="TaskNumber" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="TaskNumber" Type="Int32" Nullable="false" />
+    <Property Name="Recommendation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Rating" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="Task" Relationship="Self.FK__Registere__TaskN__442B18F2" FromRole="RegisteredTo" ToRole="Task" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__RegisteredTo__ID__4336F4B9" FromRole="RegisteredTo" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Report">
+    <Key>
+      <PropertyRef Name="ReportNumber" />
+    </Key>
+    <Property Name="ReportNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReportContent" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ReportDate" Type="DateTime" Precision="0" />
+    <Property Name="ReportTypeCode" Type="Int32" />
+    <Property Name="IDUserMadeReport" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+    <Property Name="IDUserReportedOn" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+    <Property Name="TreatmentType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Report__IDUserMa__1293BD5E" FromRole="Report" ToRole="Users" />
+    <NavigationProperty Name="ReportType" Relationship="Self.FK__Report__ReportTy__119F9925" FromRole="Report" ToRole="ReportType" />
+  </EntityType>
+  <EntityType Name="ReportType">
+    <Key>
+      <PropertyRef Name="ReportTypeCode" />
+    </Key>
+    <Property Name="ReportTypeCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReportTypeName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Report" Relationship="Self.FK__Report__ReportTy__119F9925" FromRole="ReportType" ToRole="Report" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="RequestCode" />
+    </Key>
+    <Property Name="RequestCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PrivateRequest" Type="Boolean" />
+    <Property Name="Link" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+    <Property Name="StreetCode" Type="Int32" />
+    <Property Name="CityCode" Type="Int32" />
+    <Property Name="RequestStatus" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Street" Relationship="Self.FK__Request__38B96646" FromRole="Request" ToRole="Street" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Request__ID__35DCF99B" FromRole="Request" ToRole="Users" />
+    <NavigationProperty Name="Task" Relationship="Self.FK__Task__RequestCod__3F6663D5" FromRole="Request" ToRole="Task" />
+  </EntityType>
+  <EntityType Name="Street">
+    <Key>
+      <PropertyRef Name="StreetCode" />
+      <PropertyRef Name="CityCode" />
+    </Key>
+    <Property Name="StreetCode" Type="Int32" Nullable="false" />
+    <Property Name="CityCode" Type="Int32" Nullable="false" />
+    <Property Name="StreetName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Street__CityCode__035179CE" FromRole="Street" ToRole="City" />
+    <NavigationProperty Name="Request" Relationship="Self.FK__Request__38B96646" FromRole="Street" ToRole="Request" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Users__0DCF0841" FromRole="Street" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Task">
+    <Key>
+      <PropertyRef Name="TaskNumber" />
+    </Key>
+    <Property Name="TaskNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TaskName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TaskDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TaskHour" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Confirmation" Type="Boolean" />
+    <Property Name="NumOfVulRequired" Type="Byte" Nullable="false" />
+    <Property Name="RequestCode" Type="Int32" />
+    <NavigationProperty Name="RegisteredTo" Relationship="Self.FK__Registere__TaskN__442B18F2" FromRole="Task" ToRole="RegisteredTo" />
+    <NavigationProperty Name="Request" Relationship="Self.FK__Task__RequestCod__3F6663D5" FromRole="Task" ToRole="Request" />
+    <NavigationProperty Name="Users" Relationship="Self.InterestedInRegistered" FromRole="Task" ToRole="Users" />
+    <NavigationProperty Name="VolunteerType" Relationship="Self.Topic" FromRole="Task" ToRole="VolunteerType" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MobilePhone" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Passwords" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="InterestedInMailing" Type="Boolean" />
+    <Property Name="UStatus" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="TotalRate" Type="Single" />
+    <Property Name="StreetCode" Type="Int32" />
+    <Property Name="CityCode" Type="Int32" />
+    <Property Name="UserDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="RegisteredTo" Relationship="Self.FK__RegisteredTo__ID__4336F4B9" FromRole="Users" ToRole="RegisteredTo" />
+    <NavigationProperty Name="Report" Relationship="Self.FK__Report__IDUserMa__1293BD5E" FromRole="Users" ToRole="Report" />
+    <NavigationProperty Name="Request" Relationship="Self.FK__Request__ID__35DCF99B" FromRole="Users" ToRole="Request" />
+    <NavigationProperty Name="Street" Relationship="Self.FK__Users__0DCF0841" FromRole="Users" ToRole="Street" />
+    <NavigationProperty Name="VolunteerType" Relationship="Self.InterestedIn" FromRole="Users" ToRole="VolunteerType" />
+    <NavigationProperty Name="Task" Relationship="Self.InterestedInRegistered" FromRole="Users" ToRole="Task" />
+  </EntityType>
+  <EntityType Name="VolunteerType">
+    <Key>
+      <PropertyRef Name="VolunteerCode" />
+    </Key>
+    <Property Name="VolunteerCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VolunteerName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.InterestedIn" FromRole="VolunteerType" ToRole="Users" />
+    <NavigationProperty Name="Task" Relationship="Self.Topic" FromRole="VolunteerType" ToRole="Task" />
+  </EntityType>
+  <Association Name="FK__Street__CityCode__035179CE">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="Street" Type="Self.Street" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityCode" />
+      </Principal>
+      <Dependent Role="Street">
+        <PropertyRef Name="CityCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registere__TaskN__442B18F2">
+    <End Role="Task" Type="Self.Task" Multiplicity="1" />
+    <End Role="RegisteredTo" Type="Self.RegisteredTo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="TaskNumber" />
+      </Principal>
+      <Dependent Role="RegisteredTo">
+        <PropertyRef Name="TaskNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RegisteredTo__ID__4336F4B9">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="RegisteredTo" Type="Self.RegisteredTo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RegisteredTo">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__IDUserMa__1293BD5E">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="IDUserMadeReport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__IDUserRe__1387E197">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="IDUserReportedOn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__ReportTy__119F9925">
+    <End Role="ReportType" Type="Self.ReportType" Multiplicity="0..1" />
+    <End Role="Report" Type="Self.Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReportType">
+        <PropertyRef Name="ReportTypeCode" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="ReportTypeCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Request__38B96646">
+    <End Role="Street" Type="Self.Street" Multiplicity="0..1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Street">
+        <PropertyRef Name="StreetCode" />
+        <PropertyRef Name="CityCode" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="StreetCode" />
+        <PropertyRef Name="CityCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Request__ID__35DCF99B">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Request" Type="Self.Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Task__RequestCod__3F6663D5">
+    <End Role="Request" Type="Self.Request" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestCode" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="RequestCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__0DCF0841">
+    <End Role="Street" Type="Self.Street" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Street">
+        <PropertyRef Name="StreetCode" />
+        <PropertyRef Name="CityCode" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="StreetCode" />
+        <PropertyRef Name="CityCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="InterestedIn">
+    <End Role="VolunteerType" Type="Self.VolunteerType" Multiplicity="*" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+  </Association>
+  <Association Name="InterestedInRegistered">
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+  </Association>
+  <Association Name="Topic">
+    <End Role="Task" Type="Self.Task" Multiplicity="*" />
+    <End Role="VolunteerType" Type="Self.VolunteerType" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="DailyHelpMeDbContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="City" EntityType="Self.City" />
+    <EntitySet Name="RegisteredTo" EntityType="Self.RegisteredTo" />
+    <EntitySet Name="Report" EntityType="Self.Report" />
+    <EntitySet Name="ReportType" EntityType="Self.ReportType" />
+    <EntitySet Name="Request" EntityType="Self.Request" />
+    <EntitySet Name="Street" EntityType="Self.Street" />
+    <EntitySet Name="Task" EntityType="Self.Task" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="VolunteerType" EntityType="Self.VolunteerType" />
+    <AssociationSet Name="FK__Street__CityCode__035179CE" Association="Self.FK__Street__CityCode__035179CE">
+      <End Role="City" EntitySet="City" />
+      <End Role="Street" EntitySet="Street" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registere__TaskN__442B18F2" Association="Self.FK__Registere__TaskN__442B18F2">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="RegisteredTo" EntitySet="RegisteredTo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RegisteredTo__ID__4336F4B9" Association="Self.FK__RegisteredTo__ID__4336F4B9">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="RegisteredTo" EntitySet="RegisteredTo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__IDUserMa__1293BD5E" Association="Self.FK__Report__IDUserMa__1293BD5E">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Report" EntitySet="Report" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__IDUserRe__1387E197" Association="Self.FK__Report__IDUserRe__1387E197">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Report" EntitySet="Report" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__ReportTy__119F9925" Association="Self.FK__Report__ReportTy__119F9925">
+      <End Role="ReportType" EntitySet="ReportType" />
+      <End Role="Report" EntitySet="Report" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Request__38B96646" Association="Self.FK__Request__38B96646">
+      <End Role="Street" EntitySet="Street" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Request__ID__35DCF99B" Association="Self.FK__Request__ID__35DCF99B">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Task__RequestCod__3F6663D5" Association="Self.FK__Task__RequestCod__3F6663D5">
+      <End Role="Request" EntitySet="Request" />
+      <End Role="Task" EntitySet="Task" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__0DCF0841" Association="Self.FK__Users__0DCF0841">
+      <End Role="Street" EntitySet="Street" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="InterestedIn" Association="Self.InterestedIn">
+      <End Role="VolunteerType" EntitySet="VolunteerType" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="InterestedInRegistered" Association="Self.InterestedInRegistered">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="Topic" Association="Self.Topic">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="VolunteerType" EntitySet="VolunteerType" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

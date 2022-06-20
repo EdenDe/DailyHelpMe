@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="bgroup86_prodModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="DailyHelpMeDbContext" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="City" EntityType="bgroup86_prodModel.City" />
+    <EntitySet Name="Dates" EntityType="bgroup86_prodModel.Dates" />
+    <EntitySet Name="InterestedInRegistered" EntityType="bgroup86_prodModel.InterestedInRegistered" />
+    <EntitySet Name="RegisteredTo" EntityType="bgroup86_prodModel.RegisteredTo" />
+    <EntitySet Name="Report" EntityType="bgroup86_prodModel.Report" />
+    <EntitySet Name="ReportType" EntityType="bgroup86_prodModel.ReportType" />
+    <EntitySet Name="Request" EntityType="bgroup86_prodModel.Request" />
+    <EntitySet Name="Task" EntityType="bgroup86_prodModel.Task" />
+    <EntitySet Name="TaskInDates" EntityType="bgroup86_prodModel.TaskInDates" />
+    <EntitySet Name="TaskTypes" EntityType="bgroup86_prodModel.TaskTypes" />
+    <EntitySet Name="Users" EntityType="bgroup86_prodModel.Users" />
+    <EntitySet Name="VolTypesPreferences" EntityType="bgroup86_prodModel.VolTypesPreferences" />
+    <EntitySet Name="VolunteerType" EntityType="bgroup86_prodModel.VolunteerType" />
+    <AssociationSet Name="FK__Task__CityCode__01BE3717" Association="bgroup86_prodModel.FK__Task__CityCode__01BE3717">
+      <End Role="City" EntitySet="City" />
+      <End Role="Task" EntitySet="Task" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__CityCode__15FA39EE" Association="bgroup86_prodModel.FK__Users__CityCode__15FA39EE">
+      <End Role="City" EntitySet="City" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TaskInDat__TaskD__049AA3C2" Association="bgroup86_prodModel.FK__TaskInDat__TaskD__049AA3C2">
+      <End Role="Dates" EntitySet="Dates" />
+      <End Role="TaskInDates" EntitySet="TaskInDates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Intereste__TaskD__11F49EE0" Association="bgroup86_prodModel.FK__Intereste__TaskD__11F49EE0">
+      <End Role="TaskInDates" EntitySet="TaskInDates" />
+      <End Role="InterestedInRegistered" EntitySet="InterestedInRegistered" />
+    </AssociationSet>
+    <AssociationSet Name="FK__InterestedIn__ID__11007AA7" Association="bgroup86_prodModel.FK__InterestedIn__ID__11007AA7">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="InterestedInRegistered" EntitySet="InterestedInRegistered" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Registere__TaskD__095F58DF" Association="bgroup86_prodModel.FK__Registere__TaskD__095F58DF">
+      <End Role="TaskInDates" EntitySet="TaskInDates" />
+      <End Role="RegisteredTo" EntitySet="RegisteredTo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__RegisteredTo__ID__086B34A6" Association="bgroup86_prodModel.FK__RegisteredTo__ID__086B34A6">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="RegisteredTo" EntitySet="RegisteredTo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__IDUserMa__1ABEEF0B" Association="bgroup86_prodModel.FK__Report__IDUserMa__1ABEEF0B">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Report" EntitySet="Report" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__IDUserRe__1BB31344" Association="bgroup86_prodModel.FK__Report__IDUserRe__1BB31344">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Report" EntitySet="Report" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Report__ReportTy__19CACAD2" Association="bgroup86_prodModel.FK__Report__ReportTy__19CACAD2">
+      <End Role="ReportType" EntitySet="ReportType" />
+      <End Role="Report" EntitySet="Report" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Request__ID__7A1D154F" Association="bgroup86_prodModel.FK__Request__ID__7A1D154F">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Request" EntitySet="Request" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Task__RequestCod__00CA12DE" Association="bgroup86_prodModel.FK__Task__RequestCod__00CA12DE">
+      <End Role="Request" EntitySet="Request" />
+      <End Role="Task" EntitySet="Task" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TaskInDat__TaskN__058EC7FB" Association="bgroup86_prodModel.FK__TaskInDat__TaskN__058EC7FB">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="TaskInDates" EntitySet="TaskInDates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TaskTypes__TaskN__0E240DFC" Association="bgroup86_prodModel.FK__TaskTypes__TaskN__0E240DFC">
+      <End Role="Task" EntitySet="Task" />
+      <End Role="TaskTypes" EntitySet="TaskTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TaskTypes__Volun__0D2FE9C3" Association="bgroup86_prodModel.FK__TaskTypes__Volun__0D2FE9C3">
+      <End Role="VolunteerType" EntitySet="VolunteerType" />
+      <End Role="TaskTypes" EntitySet="TaskTypes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__VolTypesPref__ID__3EFC4F81" Association="bgroup86_prodModel.FK__VolTypesPref__ID__3EFC4F81">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="VolTypesPreferences" EntitySet="VolTypesPreferences" />
+    </AssociationSet>
+    <AssociationSet Name="FK__VolTypesP__Volun__3E082B48" Association="bgroup86_prodModel.FK__VolTypesP__Volun__3E082B48">
+      <End Role="VolunteerType" EntitySet="VolunteerType" />
+      <End Role="VolTypesPreferences" EntitySet="VolTypesPreferences" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityCode" />
+    </Key>
+    <Property Name="CityCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Task" Relationship="bgroup86_prodModel.FK__Task__CityCode__01BE3717" FromRole="City" ToRole="Task" />
+    <NavigationProperty Name="Users" Relationship="bgroup86_prodModel.FK__Users__CityCode__15FA39EE" FromRole="City" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Dates">
+    <Key>
+      <PropertyRef Name="Date" />
+    </Key>
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="TaskInDates" Relationship="bgroup86_prodModel.FK__TaskInDat__TaskD__049AA3C2" FromRole="Dates" ToRole="TaskInDates" />
+  </EntityType>
+  <EntityType Name="InterestedInRegistered">
+    <Key>
+      <PropertyRef Name="InterestedInRegisteredNum" />
+    </Key>
+    <Property Name="InterestedInRegisteredNum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="TaskDateNum" Type="Int32" Nullable="false" />
+    <Property Name="SignToTaskTime" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="TaskInDates" Relationship="bgroup86_prodModel.FK__Intereste__TaskD__11F49EE0" FromRole="InterestedInRegistered" ToRole="TaskInDates" />
+    <NavigationProperty Name="Users" Relationship="bgroup86_prodModel.FK__InterestedIn__ID__11007AA7" FromRole="InterestedInRegistered" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="RegisteredTo">
+    <Key>
+      <PropertyRef Name="TaskRegisteredNum" />
+    </Key>
+    <Property Name="TaskRegisteredNum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="TaskDateNum" Type="Int32" Nullable="false" />
+    <Property Name="Recommendation" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="RegisterStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Rating" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="TaskInDates" Relationship="bgroup86_prodModel.FK__Registere__TaskD__095F58DF" FromRole="RegisteredTo" ToRole="TaskInDates" />
+    <NavigationProperty Name="Users" Relationship="bgroup86_prodModel.FK__RegisteredTo__ID__086B34A6" FromRole="RegisteredTo" ToRole="Users" />
+    <Property Name="RatingTime" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="Report">
+    <Key>
+      <PropertyRef Name="ReportNumber" />
+    </Key>
+    <Property Name="ReportNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReportContent" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ReportDate" Type="DateTime" Precision="0" />
+    <Property Name="ReportTypeCode" Type="Int32" />
+    <Property Name="IDUserMadeReport" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="IDUserReportedOn" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="TreatmentType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="bgroup86_prodModel.FK__Report__IDUserMa__1ABEEF0B" FromRole="Report" ToRole="Users" />
+    <NavigationProperty Name="Users1" Relationship="bgroup86_prodModel.FK__Report__IDUserRe__1BB31344" FromRole="Report" ToRole="Users" />
+    <NavigationProperty Name="ReportType" Relationship="bgroup86_prodModel.FK__Report__ReportTy__19CACAD2" FromRole="Report" ToRole="ReportType" />
+  </EntityType>
+  <EntityType Name="ReportType">
+    <Key>
+      <PropertyRef Name="ReportTypeCode" />
+    </Key>
+    <Property Name="ReportTypeCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReportTypeName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Report" Relationship="bgroup86_prodModel.FK__Report__ReportTy__19CACAD2" FromRole="ReportType" ToRole="Report" />
+  </EntityType>
+  <EntityType Name="Request">
+    <Key>
+      <PropertyRef Name="RequestCode" />
+    </Key>
+    <Property Name="RequestCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="PrivateRequest" Type="Boolean" />
+    <Property Name="Link" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="RequestStatus" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="bgroup86_prodModel.FK__Request__ID__7A1D154F" FromRole="Request" ToRole="Users" />
+    <NavigationProperty Name="Task" Relationship="bgroup86_prodModel.FK__Task__RequestCod__00CA12DE" FromRole="Request" ToRole="Task" />
+  </EntityType>
+  <EntityType Name="Task">
+    <Key>
+      <PropertyRef Name="TaskNumber" />
+    </Key>
+    <Property Name="TaskNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TaskName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="TaskDescription" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TaskHour" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Confirmation" Type="Boolean" />
+    <Property Name="NumOfVulRequired" Type="Byte" Nullable="false" />
+    <Property Name="RequestCode" Type="Int32" Nullable="false" />
+    <Property Name="CityCode" Type="Int32" />
+    <Property Name="Lat" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Lng" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="City" Relationship="bgroup86_prodModel.FK__Task__CityCode__01BE3717" FromRole="Task" ToRole="City" />
+    <NavigationProperty Name="Request" Relationship="bgroup86_prodModel.FK__Task__RequestCod__00CA12DE" FromRole="Task" ToRole="Request" />
+    <NavigationProperty Name="TaskInDates" Relationship="bgroup86_prodModel.FK__TaskInDat__TaskN__058EC7FB" FromRole="Task" ToRole="TaskInDates" />
+    <NavigationProperty Name="TaskTypes" Relationship="bgroup86_prodModel.FK__TaskTypes__TaskN__0E240DFC" FromRole="Task" ToRole="TaskTypes" />
+  </EntityType>
+  <EntityType Name="TaskInDates">
+    <Key>
+      <PropertyRef Name="TaskDateNum" />
+    </Key>
+    <Property Name="TaskDateNum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TaskDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TaskNumber" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Dates" Relationship="bgroup86_prodModel.FK__TaskInDat__TaskD__049AA3C2" FromRole="TaskInDates" ToRole="Dates" />
+    <NavigationProperty Name="InterestedInRegistered" Relationship="bgroup86_prodModel.FK__Intereste__TaskD__11F49EE0" FromRole="TaskInDates" ToRole="InterestedInRegistered" />
+    <NavigationProperty Name="RegisteredTo" Relationship="bgroup86_prodModel.FK__Registere__TaskD__095F58DF" FromRole="TaskInDates" ToRole="RegisteredTo" />
+    <NavigationProperty Name="Task" Relationship="bgroup86_prodModel.FK__TaskInDat__TaskN__058EC7FB" FromRole="TaskInDates" ToRole="Task" />
+  </EntityType>
+  <EntityType Name="TaskTypes">
+    <Key>
+      <PropertyRef Name="VolunteerCode" />
+      <PropertyRef Name="TaskNumber" />
+    </Key>
+    <Property Name="VolunteerCode" Type="Int32" Nullable="false" />
+    <Property Name="TaskNumber" Type="Int32" Nullable="false" />
+    <Property Name="Dummy" Type="Boolean" />
+    <NavigationProperty Name="Task" Relationship="bgroup86_prodModel.FK__TaskTypes__TaskN__0E240DFC" FromRole="TaskTypes" ToRole="Task" />
+    <NavigationProperty Name="VolunteerType" Relationship="bgroup86_prodModel.FK__TaskTypes__Volun__0D2FE9C3" FromRole="TaskTypes" ToRole="VolunteerType" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="MobilePhone" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <Property Name="Passwords" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="0" />
+    <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UStatus" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="TotalRate" Type="Single" />
+    <Property Name="CityCode" Type="Int32" />
+    <Property Name="UserDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TokenID" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="City" Relationship="bgroup86_prodModel.FK__Users__CityCode__15FA39EE" FromRole="Users" ToRole="City" />
+    <NavigationProperty Name="InterestedInRegistered" Relationship="bgroup86_prodModel.FK__InterestedIn__ID__11007AA7" FromRole="Users" ToRole="InterestedInRegistered" />
+    <NavigationProperty Name="RegisteredTo" Relationship="bgroup86_prodModel.FK__RegisteredTo__ID__086B34A6" FromRole="Users" ToRole="RegisteredTo" />
+    <NavigationProperty Name="Report" Relationship="bgroup86_prodModel.FK__Report__IDUserMa__1ABEEF0B" FromRole="Users" ToRole="Report" />
+    <NavigationProperty Name="Report1" Relationship="bgroup86_prodModel.FK__Report__IDUserRe__1BB31344" FromRole="Users" ToRole="Report" />
+    <NavigationProperty Name="Request" Relationship="bgroup86_prodModel.FK__Request__ID__7A1D154F" FromRole="Users" ToRole="Request" />
+    <NavigationProperty Name="VolTypesPreferences" Relationship="bgroup86_prodModel.FK__VolTypesPref__ID__3EFC4F81" FromRole="Users" ToRole="VolTypesPreferences" />
+    <Property Name="Rank" Type="Byte" />
+  </EntityType>
+  <EntityType Name="VolTypesPreferences">
+    <Key>
+      <PropertyRef Name="VolunteerCode" />
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="VolunteerCode" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="Dummy" Type="Boolean" />
+    <NavigationProperty Name="Users" Relationship="bgroup86_prodModel.FK__VolTypesPref__ID__3EFC4F81" FromRole="VolTypesPreferences" ToRole="Users" />
+    <NavigationProperty Name="VolunteerType" Relationship="bgroup86_prodModel.FK__VolTypesP__Volun__3E082B48" FromRole="VolTypesPreferences" ToRole="VolunteerType" />
+  </EntityType>
+  <EntityType Name="VolunteerType">
+    <Key>
+      <PropertyRef Name="VolunteerCode" />
+    </Key>
+    <Property Name="VolunteerCode" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VolunteerName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="TaskTypes" Relationship="bgroup86_prodModel.FK__TaskTypes__Volun__0D2FE9C3" FromRole="VolunteerType" ToRole="TaskTypes" />
+    <NavigationProperty Name="VolTypesPreferences" Relationship="bgroup86_prodModel.FK__VolTypesP__Volun__3E082B48" FromRole="VolunteerType" ToRole="VolTypesPreferences" />
+  </EntityType>
+  <Association Name="FK__Task__CityCode__01BE3717">
+    <End Type="bgroup86_prodModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="bgroup86_prodModel.Task" Role="Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityCode" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="CityCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__CityCode__15FA39EE">
+    <End Type="bgroup86_prodModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="bgroup86_prodModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityCode" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="CityCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TaskInDat__TaskD__049AA3C2">
+    <End Type="bgroup86_prodModel.Dates" Role="Dates" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.TaskInDates" Role="TaskInDates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dates">
+        <PropertyRef Name="Date" />
+      </Principal>
+      <Dependent Role="TaskInDates">
+        <PropertyRef Name="TaskDate" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Intereste__TaskD__11F49EE0">
+    <End Type="bgroup86_prodModel.TaskInDates" Role="TaskInDates" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.InterestedInRegistered" Role="InterestedInRegistered" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaskInDates">
+        <PropertyRef Name="TaskDateNum" />
+      </Principal>
+      <Dependent Role="InterestedInRegistered">
+        <PropertyRef Name="TaskDateNum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__InterestedIn__ID__11007AA7">
+    <End Type="bgroup86_prodModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.InterestedInRegistered" Role="InterestedInRegistered" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="InterestedInRegistered">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Registere__TaskD__095F58DF">
+    <End Type="bgroup86_prodModel.TaskInDates" Role="TaskInDates" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.RegisteredTo" Role="RegisteredTo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TaskInDates">
+        <PropertyRef Name="TaskDateNum" />
+      </Principal>
+      <Dependent Role="RegisteredTo">
+        <PropertyRef Name="TaskDateNum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__RegisteredTo__ID__086B34A6">
+    <End Type="bgroup86_prodModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.RegisteredTo" Role="RegisteredTo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="RegisteredTo">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__IDUserMa__1ABEEF0B">
+    <End Type="bgroup86_prodModel.Users" Role="Users" Multiplicity="0..1" />
+    <End Type="bgroup86_prodModel.Report" Role="Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="IDUserMadeReport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__IDUserRe__1BB31344">
+    <End Type="bgroup86_prodModel.Users" Role="Users" Multiplicity="0..1" />
+    <End Type="bgroup86_prodModel.Report" Role="Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="IDUserReportedOn" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Report__ReportTy__19CACAD2">
+    <End Type="bgroup86_prodModel.ReportType" Role="ReportType" Multiplicity="0..1" />
+    <End Type="bgroup86_prodModel.Report" Role="Report" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ReportType">
+        <PropertyRef Name="ReportTypeCode" />
+      </Principal>
+      <Dependent Role="Report">
+        <PropertyRef Name="ReportTypeCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Request__ID__7A1D154F">
+    <End Type="bgroup86_prodModel.Users" Role="Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="bgroup86_prodModel.Request" Role="Request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Request">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Task__RequestCod__00CA12DE">
+    <End Type="bgroup86_prodModel.Request" Role="Request" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="bgroup86_prodModel.Task" Role="Task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Request">
+        <PropertyRef Name="RequestCode" />
+      </Principal>
+      <Dependent Role="Task">
+        <PropertyRef Name="RequestCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TaskInDat__TaskN__058EC7FB">
+    <End Type="bgroup86_prodModel.Task" Role="Task" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.TaskInDates" Role="TaskInDates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="TaskNumber" />
+      </Principal>
+      <Dependent Role="TaskInDates">
+        <PropertyRef Name="TaskNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TaskTypes__TaskN__0E240DFC">
+    <End Type="bgroup86_prodModel.Task" Role="Task" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.TaskTypes" Role="TaskTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Task">
+        <PropertyRef Name="TaskNumber" />
+      </Principal>
+      <Dependent Role="TaskTypes">
+        <PropertyRef Name="TaskNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TaskTypes__Volun__0D2FE9C3">
+    <End Type="bgroup86_prodModel.VolunteerType" Role="VolunteerType" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.TaskTypes" Role="TaskTypes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VolunteerType">
+        <PropertyRef Name="VolunteerCode" />
+      </Principal>
+      <Dependent Role="TaskTypes">
+        <PropertyRef Name="VolunteerCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__VolTypesPref__ID__3EFC4F81">
+    <End Type="bgroup86_prodModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.VolTypesPreferences" Role="VolTypesPreferences" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="VolTypesPreferences">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__VolTypesP__Volun__3E082B48">
+    <End Type="bgroup86_prodModel.VolunteerType" Role="VolunteerType" Multiplicity="1" />
+    <End Type="bgroup86_prodModel.VolTypesPreferences" Role="VolTypesPreferences" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VolunteerType">
+        <PropertyRef Name="VolunteerCode" />
+      </Principal>
+      <Dependent Role="VolTypesPreferences">
+        <PropertyRef Name="VolunteerCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

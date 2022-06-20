@@ -85,87 +85,116 @@ namespace WebApplication.Controllers
 
                 db.SaveChanges();
 
-                request.Task.ForEach(task =>
+                foreach (var tasks in request.Task)
                 {
-                    Task tasks = new Task();
-                    if (!task.New)
-                    {
-                        tasks = req.Task.FirstOrDefault(y => y.TaskNumber == task.TaskNumber);
-                    }
-                    
-                    tasks.TaskName = task.TaskName;
-                    tasks.TaskDescription = task.TaskDescription;
-                    tasks.NumOfVulRequired = task.NumOfVulRequired;
-                    tasks.Confirmation = task.Confirmation;
-                    tasks.CityCode = task.CityCode;
-                    tasks.Lat = task.Lat;
-                    tasks.Lng = task.Lng;
-                    tasks.TaskHour = task.TaskHour;
-                    tasks.RequestCode = req.RequestCode;
 
-                    if (task.New)
+
+                    //request.Task.ForEach(task =>
+                    //{
+                    Task task = new Task();
+                    if (!tasks.New)
                     {
-                        db.Task.Add(tasks);
+                        task = req.Task.FirstOrDefault(y => y.TaskNumber == tasks.TaskNumber);
+                    }
+
+                    task.TaskName = tasks.TaskName;
+                    task.TaskDescription = tasks.TaskDescription;
+                    task.NumOfVulRequired = tasks.NumOfVulRequired;
+                    task.Confirmation = tasks.Confirmation;
+                    task.CityCode = tasks.CityCode;
+                    task.Lat = tasks.Lat;
+                    task.Lng = tasks.Lng;
+                    task.TaskHour = tasks.TaskHour;
+                    task.RequestCode = req.RequestCode;
+
+                    if (tasks.New)
+                    {
+                        db.Task.Add(task);
                     }
 
                     db.SaveChanges();
 
-                    List<string> typesForTask = new List<string>();
-                    List<string> typesToRemoveTask = new List<string>();
+                    List<TaskTypes> typesToRemoveTask = new List<TaskTypes>();
                     List<string> typesToAdd = new List<string>();
-
-                    tasks.TaskTypes.ToList().ForEach(type => {
-                        if (!task.TypesList.Contains(type.VolunteerType.VolunteerName)) {
-                            typesToAdd.Add(type.VolunteerType.VolunteerName);
-                        }                   
-                    });
+                    List<DateTime> datesToAdd = new List<DateTime>();
+                    List<DateTime> datesToRemove = new List<DateTime>();
 
 
-                    task.TypesList.ForEach(type => {
-                       tasks.TaskTypes.Any(x=> x.VolunteerType.VolunteerName != type)
-
-
-                    });
-
-
-                    if (task.New)
+                    tasks.TypesList.ForEach(type =>
                     {
-                        task.TypesList.ForEach(q =>
+                        if (!task.TaskTypes.Any(x => x.VolunteerType.VolunteerName != type) || tasks.New)
                         {
                             db.TaskTypes.Add(new TaskTypes
                             {
-                                TaskNumber = tasks.TaskNumber,
-                                VolunteerCode = db.VolunteerType.FirstOrDefault(y => y.VolunteerName == q).VolunteerCode
+                                TaskNumber = task.TaskNumber,
+                                VolunteerCode = db.VolunteerType.FirstOrDefault(y => y.VolunteerName == type).VolunteerCode
                             });
-
                         }
-                        );
 
-                        task.DatesForTask.ForEach(date =>
+                    });
+
+                    //task.TaskTypes.ToList().ForEach(type => {
+                    ////    if (!tasks.TypesList.Contains(type.VolunteerType.VolunteerName)) {
+                    ////        typesToAdd.Add(type.VolunteerType.VolunteerName);
+                    ////    }                   
+                    //});
+
+                    //tasks.TypesList.ForEach(type => {
+                    //    if (task.TaskTypes.Any(x => x.VolunteerType.VolunteerName != type)) {
+
+                    //        typesToRemoveTask.Add(type);
+                    //    }
+
+                    //});
+
+                    foreach (var date in tasks.DatesForTask)
+                    {
+
+                        if (db.Dates.SingleOrDefault(z => z.Date == date) == null)
                         {
-                            if (db.Dates.SingleOrDefault(z => z.Date == date) == null)
+                            db.Dates.Add(new Dates
                             {
-                                db.Dates.Add(new Dates
-                                {
-                                    Date = date
-                                });
-                                db.SaveChanges();
-                            }
+                                Date = date
+                            });
+                            db.SaveChanges();
+                        }
+
+                        if (!task.TaskInDates.Any(taskDate => taskDate.TaskDate == date) || tasks.New)
+                        {
+
                             db.TaskInDates.Add(new TaskInDates
                             {
-                                TaskNumber = tasks.TaskNumber,
+                                TaskNumber = task.TaskNumber,
                                 TaskDate = date
                             });
+                        }
+                    }
+
+                    List<TaskInDates> taskDatesToRemove = new List<TaskInDates>();
+
+                    if (!tasks.New)
+                    {
+                        task.TaskInDates.Where(x => !tasks.DatesForTask.Contains(x.TaskDate)).ToList().ForEach(x =>
+                        {
+                           // taskDatesToRemove.Add(x);
+                            task.TaskInDates.Remove(x);
+                        });
+
+                        task.TaskTypes.Where(type => !tasks.TypesList.Contains(type.VolunteerType.VolunteerName)).ToList().ForEach(x => {
+
+                            //typesToRemoveTask.Add(x);
+                            task.TaskTypes.Remove(x);
 
                         });
+                                               
                     }
-                  
-
-                });
+                }
 
                 db.SaveChanges();
 
-                return Ok(new { Status = "OK", Link = link });
+                // return Ok(new { Status = "OK", Link = link });
+                return Ok(req);
+
 
             }
             catch (Exception e)

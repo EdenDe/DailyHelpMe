@@ -63,7 +63,7 @@ namespace WebApplication.Controllers
                 List<RegisterProfile> taskList = new List<RegisterProfile>();
 
 
-                List<TaskInDates> list = db.RegisteredTo.Where(x => x.ID == id && x.RegisterStatus ==  "בוצע").Select(t => t.TaskInDates).ToList();
+                List<TaskInDates> list = db.RegisteredTo.Where(x => x.ID == id && x.RegisterStatus == "בוצע").Select(t => t.TaskInDates).ToList();
 
                 List<int> TaskNumberList = list.Select(x => x.TaskNumber).Distinct().ToList();
                 foreach (var taskNumber in TaskNumberList)
@@ -174,7 +174,7 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
         }
- 
+
 
         [Route("rateUser")]
         [HttpPost]
@@ -189,7 +189,7 @@ namespace WebApplication.Controllers
                 {
                     return Ok("NO");
                 }
-                
+
                 taskRegistered.Recommendation = reco.Recommendation;
                 taskRegistered.Rating = reco.Rating;
                 taskRegistered.RatingTime = DateTime.Now;
@@ -260,7 +260,7 @@ namespace WebApplication.Controllers
 
                 if (temp != null)
                 {
-                    return Ok(temp.Select(x=> new
+                    return Ok(temp.Select(x => new
                     {
                         x.Users.FirstName,
                         x.Users.LastName,
@@ -269,7 +269,7 @@ namespace WebApplication.Controllers
                         x.TaskRegisteredNum,
                         x.Users.Photo,
                         x.Users.Rank,
-         
+
                     }).ToList());
                 }
                 return Ok("No");
@@ -414,15 +414,17 @@ namespace WebApplication.Controllers
 
                 requestListTry = db.Request.Where(request => request.ID == id && request.RequestStatus == "פעיל").ToList();
 
-                requestListTry.ForEach(request =>
-                {
+                foreach (var request in requestListTry)
+                {     
+                    //requestListTry.ForEach(request =>
+                    //{
                     requestList.Add(new Requests
                     {
                         RequestCode = request.RequestCode,
                         RequestNew = false,
                         RequestName = request.RequestName,
                         PrivateRequest = request.PrivateRequest,
-                        Link = request.Link,
+                        Link = request.Link,                    
                         Task = request.Task.Select(task => new Tasks
                         {
                             TaskNumber = task.TaskNumber,
@@ -450,8 +452,9 @@ namespace WebApplication.Controllers
                         EndDate = db.Task.Where(x => x.RequestCode == request.RequestCode).Max(x => x.TaskInDates.Max(y => y.TaskDate)),
                         StartDate = db.Task.Where(x => x.RequestCode == request.RequestCode).Min(x => x.TaskInDates.Min(y => y.TaskDate)),
 
-                    }); 
-                });
+                    });
+                }
+                //});
 
                 //requestList = db.Request.Where(request => request.ID == id && request.RequestStatus == "פעיל").
                 //    Select(request => new Requests

@@ -39,49 +39,6 @@ namespace WebApplication.Controllers
         }
 
 
-
-        [Route("addTask")]
-        [HttpPost]
-        public IHttpActionResult taskAdd([FromBody] EditRequest taskssssssss)
-        {
-            try
-            {
-                DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-
-                Tasks tasks = taskssssssss.NewTasks[0];
-
-                //request.Task.ForEach(task =>
-                //{
-
-                Task task = new Task();
-
-                task.TaskName = tasks.TaskName;
-                task.TaskDescription = tasks.TaskDescription;
-                task.NumOfVulRequired = tasks.NumOfVulRequired;
-                task.Confirmation = tasks.Confirmation;
-                task.CityCode = tasks.CityCode;
-                task.Lat = tasks.Lat;
-                task.Lng = tasks.Lng;
-                task.TaskHour = tasks.TaskHour;
-                task.RequestCode = tasks.RequestCode;
-
-             
-                 
-                    db.Task.Add(task);
-
-
-                db.SaveChanges();
-
-                return Ok("YES");
-            }
-            catch (Exception)
-            {
-                return NotFound();
-            }
-        }
-
-
-
         [Route("addRequest")]
         [HttpPost]
         public IHttpActionResult Post([FromBody] EditRequest requestEdit)
@@ -130,8 +87,7 @@ namespace WebApplication.Controllers
 
                 foreach (var tasks in request.Task)
                 {
-                    //request.Task.ForEach(task =>
-                    //{
+
                     Task task = new Task();
                     if (!tasks.New)
                     {
@@ -147,13 +103,10 @@ namespace WebApplication.Controllers
                     task.Lng = tasks.Lng;
                     task.TaskHour = tasks.TaskHour;
                     task.RequestCode = tasks.RequestCode;
-                 
+
 
                     if (tasks.New)
                     {
-                        //task.RequestCode = 44;
-                        //db.Task.Add(task);
-
                         req.Task.Add(task);
                     }
 
@@ -171,7 +124,7 @@ namespace WebApplication.Controllers
                         }
 
                     });
-           
+
                     foreach (var date in tasks.DatesForTask)
                     {
 
@@ -212,11 +165,13 @@ namespace WebApplication.Controllers
 
                 foreach (var item in requestEdit.TaskToRemove)
                 {
-                     db.TaskInDates.Where(task => task.TaskNumber == item.TaskNumber).ToList().ForEach(x=> {
-                         db.TaskInDates.Remove(x);                   
-                     });
+                    db.TaskInDates.Where(task => task.TaskNumber == item.TaskNumber).ToList().ForEach(x =>
+                    {
+                        db.TaskInDates.Remove(x);
+                    });
 
-                    db.TaskTypes.Where(x => x.TaskNumber == item.TaskNumber).ToList().ForEach(x => {
+                    db.TaskTypes.Where(x => x.TaskNumber == item.TaskNumber).ToList().ForEach(x =>
+                    {
                         db.TaskTypes.Remove(x);
                     });
 
@@ -227,8 +182,6 @@ namespace WebApplication.Controllers
                 db.SaveChanges();
 
                 return Ok(new { Status = "OK", Link = req.Link });
-                // return Ok(req);
-
 
             }
             catch (Exception e)
@@ -238,100 +191,5 @@ namespace WebApplication.Controllers
         }
 
         private static Random Random = new Random();
-
-
-        //[Route("addRequest")]
-        //[HttpPost]
-        //public IHttpActionResult Post([FromBody] Requests request)
-        //{
-        //    try
-        //    {
-        //        DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-        //        string link = "";
-
-        //        while (true)
-        //        {
-        //        
-        //            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        //            link = new string(Enumerable.Repeat(chars, 20)
-        //               .Select(s => s[Random.Next(s.Length)]).ToArray());
-
-        //            if (!db.Request.Any(r => r.Link == link))
-        //            {
-        //                break;
-        //            }
-        //        }
-
-        //        Request req = new Request()
-        //        {
-        //            RequestName = request.RequestName,
-        //            ID = request.ID,
-        //            RequestStatus = request.RequestStatus,
-        //            PrivateRequest = request.PrivateRequest,
-        //            Link = link
-        //        };
-
-        //        db.Request.Add(req);
-        //        db.SaveChanges();
-
-        //        request.Task.ForEach(x =>
-        //        {
-        //            Task t = new Task
-        //            {
-        //                TaskName = x.TaskName,
-        //                TaskDescription = x.TaskDescription,
-        //                NumOfVulRequired = x.NumOfVulRequired,
-        //                Confirmation = x.Confirmation,
-        //                CityCode = x.CityCode,
-        //                Lat = x.Lat,
-        //                Lng = x.Lng,
-        //                TaskHour = x.TaskHour,
-        //                RequestCode = req.RequestCode,
-        //            };
-
-        //            db.Task.Add(t);
-        //            db.SaveChanges();
-
-        //            x.TypesList.ForEach(q =>
-        //            {
-        //                db.TaskTypes.Add(new TaskTypes
-        //                {
-        //                    TaskNumber = t.TaskNumber,
-        //                    VolunteerCode = db.VolunteerType.FirstOrDefault(y => y.VolunteerName == q).VolunteerCode
-        //                });
-
-        //            }
-        //            );
-
-        //            x.DatesForTask.ForEach(date =>
-        //            {
-        //                if (db.Dates.SingleOrDefault(z => z.Date == date) == null)
-        //                {
-        //                    db.Dates.Add(new Dates
-        //                    {
-        //                        Date = date
-        //                    });
-        //                    db.SaveChanges();
-        //                }
-        //                db.TaskInDates.Add(new TaskInDates
-        //                {
-        //                    TaskNumber = t.TaskNumber,
-        //                    TaskDate = date
-        //                });
-
-        //            });
-
-        //        });
-
-        //        db.SaveChanges();
-
-        //        return Ok(new { Status = "OK", Link = link });
-
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Content(HttpStatusCode.BadRequest, e.GetType());
-        //    }
-        //}
     }
 }

@@ -7,6 +7,7 @@ using System.Web.Http;
 using WebApplication.Dto;
 using DailyHelpMe;
 using WebApplication.Models;
+using WebApplication.Controllers;
 
 namespace WebApplication.Controllers
 {
@@ -304,45 +305,45 @@ namespace WebApplication.Controllers
             }
         }
 
-        [Route("getRequest")]
-        [HttpPost]
-        public IHttpActionResult GetRequest([FromBody] string id)
-        {
-            try
-            {
-                DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-                DateTime currentDateTime = DateTime.Now;
-                List<RegisterProfile> taskList = new List<RegisterProfile>();
+        //[Route("getRequest")]
+        //[HttpPost]
+        //public IHttpActionResult GetRequest([FromBody] string id)
+        //{
+        //    try
+        //    {
+        //        DailyHelpMeDbContext db = new DailyHelpMeDbContext();
+        //        DateTime currentDateTime = DateTime.Now;
+        //        List<RegisterProfile> taskList = new List<RegisterProfile>();
 
 
-                List<TaskInDates> list = db.RegisteredTo.Where(x => x.ID == id && x.RegisterStatus == "בוצע").Select(t => t.TaskInDates).ToList();
+        //        List<TaskInDates> list = db.RegisteredTo.Where(x => x.ID == id && x.RegisterStatus == "בוצע").Select(t => t.TaskInDates).ToList();
 
-                List<int> yo = list.Select(x => x.TaskNumber).Distinct().ToList();
-                foreach (var x in yo)
-                {
-                    List<DateTime> datess = list.Where(y => y.TaskNumber == x).Select(y => y.TaskDate).ToList();
+        //        List<int> yo = list.Select(x => x.TaskNumber).Distinct().ToList();
+        //        foreach (var x in yo)
+        //        {
+        //            List<DateTime> datess = list.Where(y => y.TaskNumber == x).Select(y => y.TaskDate).ToList();
 
-                    Task yoyo = db.Task.FirstOrDefault(q => q.TaskNumber == x);
+        //            Task yoyo = db.Task.FirstOrDefault(q => q.TaskNumber == x);
 
-                    taskList.Add(new RegisterProfile
-                    {
-                        UserUpload = yoyo.Request.ID,
-                        TaskNumber = yoyo.TaskNumber,
-                        TaskName = yoyo.TaskName,
-                        TaskHour = yoyo.TaskHour,
-                        TaskPlace = yoyo.City.CityName,
-                        TaskDates = datess,
-                        MobilePhone = yoyo.Request.Users.MobilePhone,
-                    });
+        //            taskList.Add(new RegisterProfile
+        //            {
+        //                UserUpload = yoyo.Request.ID,
+        //                TaskNumber = yoyo.TaskNumber,
+        //                TaskName = yoyo.TaskName,
+        //                TaskHour = yoyo.TaskHour,
+        //                TaskPlace = yoyo.City.CityName,
+        //                TaskDates = datess,
+        //                MobilePhone = yoyo.Request.Users.MobilePhone,
+        //            });
 
-                };
-                return Ok(taskList);
-            }
-            catch (Exception)
-            {
-                return NotFound();
-            }
-        }
+        //        };
+        //        return Ok(taskList);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return NotFound();
+        //    }
+        //}
 
         [Route("pastTask")]
         [HttpPost]
@@ -352,31 +353,31 @@ namespace WebApplication.Controllers
             {
                 DailyHelpMeDbContext db = new DailyHelpMeDbContext();
                 DateTime currentDateTime = DateTime.Now;
-                List<RegisterProfile> taskList = new List<RegisterProfile>();
+                List<RegisterProfile> newTaskList = new List<RegisterProfile>();
 
 
-                List<TaskInDates> list = db.RegisteredTo.Where(x => x.ID == id && x.RegisterStatus == "בוצע").Select(t => t.TaskInDates).ToList();
+                List<TaskInDates> taskList = db.RegisteredTo.Where(x => x.ID == id && x.RegisterStatus == "בוצע").Select(t => t.TaskInDates).ToList();
 
-                List<int> yo = list.Select(x => x.TaskNumber).Distinct().ToList();
-                foreach (var x in yo)
+                List<int> TaskNumberList = taskList.Select(x => x.TaskNumber).Distinct().ToList();
+                foreach (int x in TaskNumberList)
                 {
-                    List<DateTime> datess = list.Where(y => y.TaskNumber == x).Select(y => y.TaskDate).ToList();
+                    List<DateTime> dateList = taskList.Where(y => y.TaskNumber == x).Select(y => y.TaskDate).ToList();
 
-                    Task yoyo = db.Task.FirstOrDefault(q => q.TaskNumber == x);
+                    Task task = db.Task.FirstOrDefault(q => q.TaskNumber == x);
 
-                    taskList.Add(new RegisterProfile
+                    newTaskList.Add(new RegisterProfile
                     {
-                        UserUpload = yoyo.Request.ID,
-                        TaskNumber = yoyo.TaskNumber,
-                        TaskName = yoyo.TaskName,
-                        TaskHour = yoyo.TaskHour,
-                        TaskPlace = yoyo.City.CityName,
-                        TaskDates = datess,
-                        MobilePhone = yoyo.Request.Users.MobilePhone,
+                        UserUpload = task.Request.ID,
+                        TaskNumber = task.TaskNumber,
+                        TaskName = task.TaskName,
+                        TaskHour = task.TaskHour,
+                        TaskPlace = task.City.CityName,
+                        TaskDates = dateList,
+                        MobilePhone = task.Request.Users.MobilePhone,
                     });
 
                 };
-                return Ok(taskList);
+                return Ok(newTaskList);
             }
             catch (Exception)
             {
@@ -409,148 +410,65 @@ namespace WebApplication.Controllers
             try
             {
                 DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-                List<Requests> requestList = new List<Requests>();
                 List<Request> requestListTry = new List<Request>();
 
                 requestListTry = db.Request.Where(request => request.ID == id && request.RequestStatus == "פעיל").ToList();
 
-                foreach (var request in requestListTry)
-                {     
-                    //requestListTry.ForEach(request =>
-                    //{
-                    requestList.Add(new Requests
-                    {
-                        RequestCode = request.RequestCode,
-                        RequestNew = false,
-                        RequestName = request.RequestName,
-                        PrivateRequest = request.PrivateRequest,
-                        Link = request.Link,                    
-                        Task = request.Task.Select(task => new Tasks
-                        {
-                            TaskNumber = task.TaskNumber,
-                            New = false,
-                            TaskDescription = task.TaskDescription,
-                            TaskName = task.TaskName,
-                            DatesForTask = task.TaskInDates.Where(taskDate => taskDate.TaskNumber == task.TaskNumber).Select(date => date.TaskDate).OrderBy(date => date).ToList(),
-                            TaskHour = task.TaskHour,
-                            NumOfVulRequired = task.NumOfVulRequired,
-                            TypesList = task.TaskTypes.Where(taskType => taskType.TaskNumber == task.TaskNumber).Select(type => type.VolunteerType.VolunteerName).ToList(),
-                            CityName = task.City.CityName,
-                            CityCode = task.CityCode,
-                            Lat = task.Lat,
-                            Lng = task.Lng,
-                            Confirmation = task.Confirmation,
-                            TaskDateStatus = task.TaskInDates.Select(taskDate => new TaskStatus
-                            {
-                                TaskDateNum = taskDate.TaskDateNum,
-                                TaskDate = taskDate.TaskDate,
-                                Status = SetStatus(taskDate.TaskDateNum),
-                                UserSigned = SetUsers(taskDate.TaskDateNum)
-                            }).ToList(),
-
-                        }).ToList(),
-                        EndDate = db.Task.Where(x => x.RequestCode == request.RequestCode).Max(x => x.TaskInDates.Max(y => y.TaskDate)),
-                        StartDate = db.Task.Where(x => x.RequestCode == request.RequestCode).Min(x => x.TaskInDates.Min(y => y.TaskDate)),
-
-                    });
-                }
-                //});
-
-                //requestList = db.Request.Where(request => request.ID == id && request.RequestStatus == "פעיל").
-                //    Select(request => new Requests
-                //    {
-                //        RequestCode = request.RequestCode,
-                //        RequestName = request.RequestName,
-                //        PrivateRequest = request.PrivateRequest,
-                //        Link = request.Link,
-                //        Task = request.Task.Select(task => new Tasks
-                //        {
-                //            TaskNumber = task.TaskNumber,
-                //            TaskDescription = task.TaskDescription,
-                //            TaskName = task.TaskName,
-                //            DatesForTask = task.TaskInDates.Where(taskDate => taskDate.TaskNumber == task.TaskNumber).Select(date => date.TaskDate).OrderBy(date => date).ToList(),
-                //            TaskHour = task.TaskHour,
-                //            NumOfVulRequired = task.NumOfVulRequired,
-                //            TypesList = task.TaskTypes.Where(taskType => taskType.TaskNumber == task.TaskNumber).Select(type => type.VolunteerType.VolunteerName).ToList(),
-                //            CityName = task.City.CityName,
-                //            Confirmation = task.Confirmation,
-                //            TaskDateStatus = task.TaskInDates.Select(taskDate => new TaskStatus
-                //            {
-                //                TaskDateNum = taskDate.TaskDateNum,
-                //                TaskDate = taskDate.TaskDate,
-                //               // Status = SetStatus(taskDate.TaskDateNum),
-                //                //UserSigned = SetUsers(taskDate.TaskDateNum)
-                //            }).ToList(),
-
-                //        }).ToList(),
-                //        EndDate = db.Task.Where(x => x.RequestCode == request.RequestCode).Max(x => x.TaskInDates.Max(y => y.TaskDate)),
-                //        StartDate = db.Task.Where(x => x.RequestCode == request.RequestCode).Min(x => x.TaskInDates.Min(y => y.TaskDate)),
-
-                //    }).ToList();
-
-
-                //foreach (Requests request in requestList)
-                //{
-                //    foreach (Tasks task in request.Task)
-                //    {
-                //        foreach (TaskStatus taskStatus in task.TaskDateStatus)
-                //        {
-                //            taskStatus.Status = SetStatus(taskStatus.TaskDateNum);
-                //            taskStatus.UserSigned = SetUsers(taskStatus.TaskDateNum);
-
-                //        }
-                //    }
-
-                //}
-
-                return Ok(requestList);
+                return Ok(MakeRequestsList(requestListTry));
             }
             catch (Exception)
             {
                 return Ok("NO");
             }
+        }
 
+        public List<Requests> MakeRequestsList(List<Request> requestListTry) {
 
+            DailyHelpMeDbContext db = new DailyHelpMeDbContext();
+  
+            List<Requests> requestList = new List<Requests>();
 
-            //try
-            //{
-            //    DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-            //    DateTime currentDateTime = DateTime.Now;
-            //    List<Task> taskList = new List<Task>();
-            //    List<requestlist> taskList2 = new List<requestlist>();
+            foreach (var request in requestListTry)
+            {
+                requestList.Add(new Requests
+                {
+                    RequestCode = request.RequestCode,
+                    RequestNew = false,
+                    RequestName = request.RequestName,
+                    PrivateRequest = request.PrivateRequest,
+                    Link = request.Link,
+                    RequestStatus = request.RequestStatus,
+                    Task = request.Task.Select(task => new Tasks
+                    {
+                        TaskNumber = task.TaskNumber,
+                        New = false,
+                        TaskDescription = task.TaskDescription,
+                        TaskName = task.TaskName,
+                        DatesForTask = task.TaskInDates.Where(taskDate => taskDate.TaskNumber == task.TaskNumber).Select(date => date.TaskDate).OrderBy(date => date).ToList(),
+                        TaskHour = task.TaskHour,
+                        NumOfVulRequired = task.NumOfVulRequired,
+                        TypesList = task.TaskTypes.Where(taskType => taskType.TaskNumber == task.TaskNumber).Select(type => type.VolunteerType.VolunteerName).ToList(),
+                        CityName = task.City.CityName,
+                        CityCode = task.CityCode,
+                        Lat = task.Lat,
+                        Lng = task.Lng,
+                        Confirmation = task.Confirmation,
+                        TaskDateStatus = task.TaskInDates.Select(taskDate => new TaskStatus
+                        {
+                            TaskDateNum = taskDate.TaskDateNum,
+                            TaskDate = taskDate.TaskDate,
+                            Status = SetStatus(taskDate.TaskDateNum),
+                            UserSigned = SetUsers(taskDate.TaskDateNum)
+                        }).ToList(),
 
-            //    List<Request> list = db.Request.Where(x => x.ID == id && x.RequestStatus == "פעיל").ToList();
-            //    List<TaskInDates> list1 = db.RegisteredTo.Where(x => x.ID == id && x.RegisterStatus == "בוצע").Select(t => t.TaskInDates).ToList();
+                    }).ToList(),
+                    EndDate = db.Task.Where(x => x.RequestCode == request.RequestCode).Max(x => x.TaskInDates.Max(y => y.TaskDate)),
+                    StartDate = db.Task.Where(x => x.RequestCode == request.RequestCode).Min(x => x.TaskInDates.Min(y => y.TaskDate)),
 
-            //    List<int> yo = list1.Select(x => x.TaskNumber).Distinct().ToList();
-            //    foreach (var x in list)
-            //    {
-            //        taskList = db.Task.Where(y => y.RequestCode == x.RequestCode).ToList();
+                });
+            }
 
-            //        foreach (var e in taskList)
-            //        {
-
-            //            taskList2.Add(new requestlist
-            //            {
-            //                RequestName = x.RequestName,
-            //                PrivateRequest = x.PrivateRequest,
-            //                UserUpload = e.Request.ID,
-            //                TaskNumber = e.TaskNumber,
-            //                TaskName = e.TaskName,
-            //                TaskHour = e.TaskHour,
-            //                TaskPlace = e.City.CityName,
-            //                MobilePhone = e.Request.Users.MobilePhone,
-            //            });
-            //        }
-
-
-            //    };
-            //    return Ok(taskList2);
-            //}
-            //catch (Exception)
-            //{
-            //    return NotFound();
-            //}
+            return requestList;
         }
 
         List<UserDto> SetUsers(int taskDateNum)
@@ -589,46 +507,93 @@ namespace WebApplication.Controllers
             return usersDtoList;
         }
 
+
         [Route("pastRequest")]
         [HttpPost]
-        public IHttpActionResult PastRequest([FromBody] string id)
+        public IHttpActionResult GetPastRequest([FromBody] string id)
         {
             try
             {
                 DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-                DateTime currentDateTime = DateTime.Now;
-                List<Task> taskList = new List<Task>();
-                List<requestlist> taskList2 = new List<requestlist>();
+                List<Request> requestListTry = new List<Request>();
 
-                List<Request> list = db.Request.Where(x => x.ID == id && x.RequestStatus == "עבר").ToList();
-                List<TaskInDates> list1 = db.RegisteredTo.Where(x => x.ID == id && x.RegisterStatus == "בוצע").Select(t => t.TaskInDates).ToList();
+                requestListTry = db.Request.Where(request => request.ID == id && request.RequestStatus == "עבר").ToList();
 
-                List<int> yo = list1.Select(x => x.TaskNumber).Distinct().ToList();
-                foreach (var x in list)
-                {
-                    taskList = db.Task.Where(y => y.RequestCode == x.RequestCode).ToList();
-
-                    foreach (var e in taskList)
-                    {
-
-                        taskList2.Add(new requestlist
-                        {
-                            RequestName = x.RequestName,
-                            PrivateRequest = x.PrivateRequest,
-                            UserUpload = e.Request.ID,
-                            TaskNumber = e.TaskNumber,
-                            TaskName = e.TaskName,
-                            TaskHour = e.TaskHour,
-                            TaskPlace = e.City.CityName,
-                            MobilePhone = e.Request.Users.MobilePhone,
-                        });
-                    }
-                };
-                return Ok(taskList2);
+                return Ok(MakeRequestsList(requestListTry));
             }
             catch (Exception)
             {
-                return NotFound();
+                return Ok("NO");
+            }
+        }
+
+
+
+        [Route("deleteRequest")]
+        [HttpDelete]
+        public IHttpActionResult DeleteRequest([FromBody] int requestCode)
+        {
+            try
+            {
+                PushNotificationsController push = new PushNotificationsController();
+
+                DailyHelpMeDbContext db = new DailyHelpMeDbContext();
+
+                Request request = new Request();
+
+                request = db.Request.FirstOrDefault(req => req.RequestCode == requestCode);
+
+                if (request is null) {
+                    return Ok("NO");
+                }
+
+                foreach (Task task in request.Task)
+                {
+                    List<TaskInDates> taskDates = task.TaskInDates.ToList();
+                    List<InterestedInRegistered> InterestedInRegisteredList = new List<InterestedInRegistered>();
+                    List<RegisteredTo> RegisteredToList = new List<RegisteredTo>();
+
+                    foreach (var taskDate in taskDates)
+                    {
+                        taskDate.InterestedInRegistered.ToList().ForEach(x =>
+                        {
+                            InterestedInRegisteredList.Add(x);
+                            db.InterestedInRegistered.Remove(x);
+                            push.PushNoti(new PushNoteData
+                            {
+                                to = x.Users.TokenID,
+                                title = "בקשת ההתנדבות לא אושרה",
+                                body = $"מעלה הבקשה לא אישר את שיבוצך ולכן ניסיון שיבוצך לבקשה {x.TaskInDates.Task.TaskName} מתבטלת"
+                            });                      
+                        });
+
+                        taskDate.RegisteredTo.ToList().ForEach(x =>
+                        {
+                            RegisteredToList.Add(x);
+                           
+
+                            Users u = db.RegisteredTo.FirstOrDefault(y => x.TaskRegisteredNum == y.TaskRegisteredNum).Users;
+
+                            push.PushNoti(new PushNoteData
+                            {
+                                to = u.TokenID,
+                                title = "בקשת ההתנדבות לא אושרה",
+                                body = $" ניסיון השיבוץ של {u.FirstName} לבקשתך  בוטל עקב ביטולה ",
+
+                            });
+
+                            db.RegisteredTo.Remove(x);
+                        });
+
+                    }
+
+                }
+
+                return Ok("OK");
+            }
+            catch (Exception)
+            {
+                return Ok("NO");
             }
         }
 

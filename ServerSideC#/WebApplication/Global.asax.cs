@@ -29,9 +29,11 @@ namespace WebApplication
 
             //code for timers
 
-            var totalMilliSecondsPerDay = TimeSpan.FromDays(1).TotalMilliseconds;
+             var totalMilliSecondsPerDay = TimeSpan.FromDays(1).TotalMilliseconds;
+            //var totalMilliSecondsPerDay = 100;
 
-            timer1NotifiNoApprove.Interval = 100;
+
+            timer1NotifiNoApprove.Interval = totalMilliSecondsPerDay;
             timer1NotifiNoApprove.Elapsed += tm_Tick1;
             path = Server.MapPath("/");
 

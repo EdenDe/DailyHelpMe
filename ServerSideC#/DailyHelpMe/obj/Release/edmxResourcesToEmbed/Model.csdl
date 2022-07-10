@@ -248,6 +248,7 @@
     <Property Name="VolunteerName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="TaskTypes" Relationship="bgroup86_prodModel.FK__TaskTypes__Volun__0D2FE9C3" FromRole="VolunteerType" ToRole="TaskTypes" />
     <NavigationProperty Name="VolTypesPreferences" Relationship="bgroup86_prodModel.FK__VolTypesP__Volun__3E082B48" FromRole="VolunteerType" ToRole="VolTypesPreferences" />
+    <Property Name="Aprroved" Type="Boolean" />
   </EntityType>
   <Association Name="FK__Task__CityCode__01BE3717">
     <End Type="bgroup86_prodModel.City" Role="City" Multiplicity="0..1" />

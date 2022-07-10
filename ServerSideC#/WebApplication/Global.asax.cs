@@ -12,12 +12,12 @@ using WebApplication.Services;
 
 namespace WebApplication
 {
-    public class WebApiApplication : System.Web.HttpApplication
+    public class WebApiApplication : HttpApplication
     {
         static Timer timer1NotifiNoApprove = new Timer();
         static Timer timer2TopThree = new Timer();
         static Timer timer3RequestPast = new Timer();
-        string path = null;
+        static Timer timer4CustomerLearner = new Timer();
 
         protected void Application_Start()
         {
@@ -29,16 +29,11 @@ namespace WebApplication
 
             //code for timers
 
-             var totalMilliSecondsPerDay = TimeSpan.FromDays(1).TotalMilliseconds;
-            //var totalMilliSecondsPerDay = 100;
-
+            var totalMilliSecondsPerDay = TimeSpan.FromDays(1).TotalMilliseconds;
 
             timer1NotifiNoApprove.Interval = totalMilliSecondsPerDay;
             timer1NotifiNoApprove.Elapsed += tm_Tick1;
-            path = Server.MapPath("/");
-
-            //var totalMilliSecondsPerDay = TimeSpan.FromDays(1).TotalMilliseconds;
-            //var timer = new Timer(totalMilliSecondsPerDay);
+            StartTimer1();
 
             timer2TopThree.Interval = totalMilliSecondsPerDay;
             timer2TopThree.Elapsed += tm_Tick2;
@@ -47,13 +42,17 @@ namespace WebApplication
             timer3RequestPast.Interval = totalMilliSecondsPerDay;
             timer3RequestPast.Elapsed += tm_Tick3;
             StartTimer3();
+
+            timer4CustomerLearner.Interval = totalMilliSecondsPerDay;
+            timer4CustomerLearner.Elapsed += tm_Tick4;
+            StartTimer4();
         }
 
         //code for timer1
         private void tm_Tick1(object sender, ElapsedEventArgs e)
         {
             EndTimer1();
-            TimerServices.CheckIf24Hpassed(path);
+            TimerServices.CheckIf24Hpassed();
         }
 
         public static void StartTimer1()
@@ -64,7 +63,6 @@ namespace WebApplication
         public static void EndTimer1()
         {
             timer1NotifiNoApprove.Enabled = false;
-
         }
 
         //code for time2
@@ -73,7 +71,7 @@ namespace WebApplication
             EndTimer2();
             if (DateTime.Today.Day == 1)
             {
-                TimerServices.CheckTopThree();
+              TimerServices.CheckTopThree();
             }
         }
 
@@ -103,6 +101,28 @@ namespace WebApplication
         public static void EndTimer3()
         {
             timer3RequestPast.Enabled = false;
+
+        }
+
+
+        //code for time4
+        private void tm_Tick4(object sender, ElapsedEventArgs e)
+        {
+            EndTimer4();
+            if (DateTime.Today.Day == 14)
+            {
+               TimerServices.CustomerLearner();
+            }     
+        }
+
+        public static void StartTimer4()
+        {
+            timer4CustomerLearner.Enabled = true;
+        }
+
+        public static void EndTimer4()
+        {
+            timer4CustomerLearner.Enabled = false;
 
         }
     }

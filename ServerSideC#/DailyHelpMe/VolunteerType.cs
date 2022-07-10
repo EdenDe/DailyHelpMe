@@ -23,6 +23,7 @@ namespace DailyHelpMe
     
         public int VolunteerCode { get; set; }
         public string VolunteerName { get; set; }
+        public Nullable<bool> Aprroved { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TaskTypes> TaskTypes { get; set; }

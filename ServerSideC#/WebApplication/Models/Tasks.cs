@@ -25,7 +25,7 @@ namespace WebApplication.Models
 
         public List<string> TypesList { get; set; }
         public List<DateTime> DatesForTask { get; set; }
-
+        public string ReqLink { get; set; }
         public bool New { get; set; }
     }
 }

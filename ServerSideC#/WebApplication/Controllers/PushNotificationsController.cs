@@ -57,44 +57,7 @@ namespace WebApplication.Controllers
             return "success:) --- " + responseFromServer + ", " + returnStatus;
         }
 
-        [Route("searchUser")]
-        [HttpPost]
-        public IHttpActionResult Post([FromBody] string token)
-        {
-            try
-            {
-                DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-                Users user = db.Users.FirstOrDefault(x => x.TokenID == token);
-                if (user != null)
-                {
-                    return Ok(new 
-                    {
-                        user.ID,
-                        user.FirstName,
-                        user.LastName,
-                        user.MobilePhone,
-                        user.Email,
-                        user.DateOfBirth,
-                        user.Photo,
-                        user.Gender,
-                        user.City.CityName,
-                        user.UserDescription,
-                        user.TotalRate,
-                        user.Rank,
-                        user.TokenID,
-                        OpenRequests = user.Request.Where(request => request.ID == user.ID && request.RequestStatus == "פעיל").Count(),
-                        RegisteredTasks = user.RegisteredTo.Where(task => task.ID == user.ID && task.RegisterStatus == "טרם בוצע").Count(),
-                        PastRequests = user.Request.Where(request => request.ID == user.ID && request.RequestStatus == "עבר").Count(),
-                        TaskDone = user.RegisteredTo.Where(task => task.ID == user.ID && task.RegisterStatus == "בוצע").Count(),
-                    });
-                }
-                return Ok("NO");
-            }
-            catch (Exception)
-            {
-                return NotFound();
-            }
-        }
+
 
         [Route("updateToken")]
         [HttpPost]

@@ -102,7 +102,7 @@ namespace WebApplication.Controllers
                     task.Lat = tasks.Lat;
                     task.Lng = tasks.Lng;
                     task.TaskHour = tasks.TaskHour;
-                    task.RequestCode = tasks.RequestCode;
+                    task.RequestCode = req.RequestCode;
 
 
                     if (tasks.New)
@@ -181,7 +181,7 @@ namespace WebApplication.Controllers
 
                 db.SaveChanges();
 
-                return Ok(new { Status = "OK", Link = req.Link });
+                return Ok(new { Status = "OK", req.Link });
 
             }
             catch (Exception e)

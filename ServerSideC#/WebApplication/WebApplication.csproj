@@ -305,6 +305,7 @@
     <Compile Include="Controllers\TimerController.cs" />
     <Compile Include="Controllers\TypesController.cs" />
     <Compile Include="Dto\AddToken.cs" />
+    <Compile Include="Dto\DataForManager.cs" />
     <Compile Include="Dto\DateAndTasks.cs" />
     <Compile Include="Dto\EditRequest.cs" />
     <Compile Include="Dto\FilterRequestBy.cs" />

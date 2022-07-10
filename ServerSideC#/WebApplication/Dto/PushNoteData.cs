@@ -11,7 +11,6 @@ namespace WebApplication.Dto
             public string to { get; set; }
             public string title { get; set; }
             public string body { get; set; }
-   
          
        
     }

@@ -68,7 +68,8 @@ namespace WebApplication.Controllers
                         TaskDbList = req.Task.ToList();
                     }
                 }
-                else {
+                else
+                {
                     TaskDbList = db.Task.Where(x => x.Request.RequestStatus == "פעיל" && x.Request.ID != filter.ID && x.Request.PrivateRequest == false).ToList();
                 }
 
@@ -81,18 +82,17 @@ namespace WebApplication.Controllers
                 {
                     Tasks newTasks = new Tasks
                     {
-
                         TaskNumber = task.TaskNumber,
                         TaskName = task.TaskName,
                         TaskHour = task.TaskHour,
-                        DatesForTask = task.TaskInDates.Where(x => x.TaskDate > DateTime.Today).Select(y => y.TaskDate).OrderBy(date => date).ToList(),                
+                        DatesForTask = task.TaskInDates.Where(x => x.TaskDate > DateTime.Today).Select(y => y.TaskDate).OrderBy(date => date).ToList(),
                         TaskDescription = task.TaskDescription,
                         Confirmation = task.Confirmation,
                         RequestCode = task.RequestCode,
                         Lat = task.Lat,
                         Lng = task.Lng,
                         CityName = db.City.FirstOrDefault(y => y.CityCode == task.CityCode).CityName,
-                        TypesList = task.TaskTypes.Select(type => type.VolunteerType.VolunteerName).ToList(),
+                        TypesList = task.TaskTypes.Where(type=> type.VolunteerType.Aprroved==true).Select(type => type.VolunteerType.VolunteerName).ToList(),
                         TaskDateStatus = task.TaskInDates.Where(x => x.TaskDate > DateTime.Today).Select(taskDate => new TaskStatus
                         {
                             TaskDateNum = taskDate.TaskDateNum,
@@ -139,7 +139,8 @@ namespace WebApplication.Controllers
 
                     requestList.Add(new Requests
                     {
-                        UserUpload = request.Users.FirstName,
+                        UserUpload = request.Users.FirstName,   
+                        LastName = request.Users.LastName,
                         RequestCode = request.RequestCode,
                         RequestName = request.RequestName,
                         ID = request.ID,
@@ -178,36 +179,6 @@ namespace WebApplication.Controllers
             return "sign";
         }
 
-        //[Route("getTopThree")]
-        //[HttpGet]
-        //public IHttpActionResult GetTopThree([FromBody] int id)
-        //{
-        //    try
-        //    {
-        //        DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-
-        //        List<string> IDlist = db.RegisteredTo.Where(x => x.TaskInDates.TaskDate.Month == (DateTime.Today.Month-1) && x.RegisterStatus == "בוצע")
-        //              .GroupBy(x => x.ID).Select(x => new { ID = x.Key, TotalTasks = x.Count() }).OrderByDescending(y => y.TotalTasks).Take(3).Select(x => x.ID).ToList();
-
-        //        List<Users> usersList = db.Users.ToList();
-
-        //        usersList.ForEach(x => x.Rank = 0);
-
-        //        byte rank = 1;
-        //        IDlist.ForEach(userID =>
-        //        {
-        //            usersList.FirstOrDefault(user => user.ID == userID).Rank = rank++;
-        //        });
-
-        //        db.SaveChanges();
-
-        //        return Ok(IDlist);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return NotFound();
-        //    }
-        //}
 
         [Route("getRequests")]
         [HttpPost]
@@ -239,6 +210,7 @@ namespace WebApplication.Controllers
         {
             try
             {
+                PushNotificationsController push = new PushNotificationsController();
                 DailyHelpMeDbContext db = new DailyHelpMeDbContext();
                 TaskInDates taskChosen = db.TaskInDates.FirstOrDefault(task => task.TaskDate == regi.TaskDate && task.TaskNumber == regi.TaskNumber);
                 string res = "NO";
@@ -257,6 +229,15 @@ namespace WebApplication.Controllers
                         SignToTaskTime = DateTime.Now
                     });
 
+                    if (taskChosen.Task.Request.Users.TokenID != null) {
+                        push.PushNoti(new PushNoteData
+                        {
+                            to = taskChosen.Task.Request.Users.TokenID,
+                            title = "שיבוץ חדש למשימה",
+                            body = $" ישנו ממתין לאישור שיבוץ עבור המשימה {taskChosen.Task.TaskName} בתאריך {taskChosen.TaskDate.ToShortDateString()}",
+                        });
+                    }
+                
                     res = "wait";
                 }
                 else
@@ -267,6 +248,14 @@ namespace WebApplication.Controllers
                         ID = regi.ID,
                         TaskDateNum = taskChosen.TaskDateNum,
                     });
+
+                    push.PushNoti(new PushNoteData
+                    {
+                        to = taskChosen.Task.Request.Users.TokenID,
+                        title = "שיבוץ חדש למשימה",
+                        body = $" ישנו שיבוץ חדש עבור המשימה {taskChosen.Task.TaskName} בתאריך {taskChosen.TaskDate.ToShortDateString()}",
+                    });
+
 
                     res = "signed";
                 }

@@ -10,6 +10,8 @@ namespace WebApplication.Models
     {
         public string UserUpload { get; set; }
         public int RequestCode { get; set; }
+
+        public string LastName { get; set; }
         public string RequestName { get; set; }
         public string ID { get; set; }
         public byte? Rank { get; set; }

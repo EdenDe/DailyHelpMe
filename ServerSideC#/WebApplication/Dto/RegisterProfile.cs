@@ -15,6 +15,7 @@ namespace WebApplication.Dto
         public int TaskNumber { get; set; }
         public bool Past { get; set; }
 
+        public string Photo { get; set; }
         public string Status { get; set; }
 
         public string UserUpload { get; set; }

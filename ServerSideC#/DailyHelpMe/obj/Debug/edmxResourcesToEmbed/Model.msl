@@ -139,6 +139,7 @@
     <EntitySetMapping Name="VolunteerType">
       <EntityTypeMapping TypeName="bgroup86_prodModel.VolunteerType">
         <MappingFragment StoreEntitySet="VolunteerType">
+          <ScalarProperty Name="Aprroved" ColumnName="Aprroved" />
           <ScalarProperty Name="VolunteerName" ColumnName="VolunteerName" />
           <ScalarProperty Name="VolunteerCode" ColumnName="VolunteerCode" />
         </MappingFragment>

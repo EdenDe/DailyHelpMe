@@ -13,21 +13,7 @@ namespace WebApplication.Controllers
 {
     public class CalendarController : ApiController
     {
-        // GET: api/Calendar
 
-
-        public void Get()
-        {
-
-        }
-
-        // GET: api/Calendar/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Calendar
         [Route("getTasksForCalendar")]
         [HttpPost]
         public IHttpActionResult Post([FromBody] string id)
@@ -53,8 +39,10 @@ namespace WebApplication.Controllers
                         TaskNumber = x.TaskNumber,
                         TaskName = x.TaskName,
                         TaskHour = x.TaskHour,
+                        Email = x.Request.Users.Email,
                         TaskDescription = x.TaskDescription,
                         MobilePhone = x.Request.Users.MobilePhone,
+                        LastName = x.Request.Users.LastName,
                         FirstName = x.Request.Users.FirstName,
                         SignStatus = "signed",
                         Photo = x.Request.Users.Photo,
@@ -84,24 +72,6 @@ namespace WebApplication.Controllers
                     });
                 };
 
-
-                //db.InterestedInRegistered.Where(x => x.ID == id && x.TaskInDates.TaskDate == date).Select(x => x.TaskInDates.Task).ToList()
-                //    .ForEach(x=> boo.Add(new TaskAndUser
-                //    {
-                //        CityName = x.City.CityName,
-                //        TaskNumber = x.TaskNumber,
-                //        TaskName = x.TaskName,
-                //        TaskHour = x.TaskHour,
-                //        TaskDescription = x.TaskDescription,
-                //        MobilePhone = x.Request.Users.MobilePhone,
-                //        FirstName = x.Request.Users.FirstName,
-                //        SignStatus = "wait",
-                //        Photo = x.Request.Users.Photo,
-                //        Lat = x.Lat,
-                //        Lng = x.Lng,
-
-                //    }));
-
                 list.Add(new DateAndTasks
                 {
                     Date = date,
@@ -116,14 +86,5 @@ namespace WebApplication.Controllers
             return Ok(list.OrderBy(x=> x.Date));
         }
 
-        // PUT: api/Calendar/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/Calendar/5
-        public void Delete(int id)
-        {
-        }
     }
 }

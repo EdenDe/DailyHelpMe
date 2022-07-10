@@ -12,9 +12,12 @@ namespace WebApplication.Dto
         public string TaskDescription { get; set; }
         public TimeSpan TaskHour { get; set; }
         public string CityName { get; set; }
+        public string Email { get; set; }
         public string SignStatus { get; set; }
         public string Photo { get; set; }
         public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         public string MobilePhone { get; set; }
         public string Lat { get; set; }
         public string Lng { get; set; }

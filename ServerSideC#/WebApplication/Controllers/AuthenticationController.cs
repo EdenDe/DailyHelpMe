@@ -12,9 +12,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Text;
 using System.Security.Cryptography;
-using MimeKit;
-using MimeKit.Text;
-using MailKit.Net.Smtp;
+using System.Net.Mail;
 
 namespace WebApplication.Controllers
 {
@@ -36,28 +34,8 @@ namespace WebApplication.Controllers
                 else if (user.UStatus == "חסום")
                     return Ok("user blocked");
                 else
-                    return Ok(new
-                    {
-                        user.ID,
-                        user.FirstName,
-                        user.LastName,
-                        user.MobilePhone,
-                        user.Email,
-                        user.DateOfBirth,
-                        user.Photo,
-                        user.Gender,
-                        user.City.CityName,
-                        user.UserDescription,
-                        user.TotalRate,
-                        user.Rank,
-                        user.TokenID,
-                        OpenRequests = user.Request.Where(request => request.ID == user.ID && request.RequestStatus == "פעיל").Count(),
-                        RegisteredTasks = user.RegisteredTo.Where(task => task.ID == user.ID && task.RegisterStatus == "טרם בוצע").Count(),
-                        PastRequests = user.Request.Where(request => request.ID == user.ID && request.RequestStatus == "עבר").Count(),
-                        TaskDone = user.RegisteredTo.Where(task => task.ID == user.ID && task.RegisterStatus == "בוצע").Count(),
+                    return Ok(UserGet(user));
 
-                    });
-                
             }
             catch (Exception ex)
             {
@@ -71,33 +49,33 @@ namespace WebApplication.Controllers
         {
             try
             {
+ 
                 DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-
-                string passwordHashed = ComputeSha256Hash(user.Passwords);
-
-                if (db.City.Select(x => x.CityName == user.CityName).ToList() == null)
-                {
-                    db.City.Add(new City { CityName = user.CityName });
-                }
-
-                db.SaveChanges();
-
-                Users u = new Users
-                {
+                Users u = new Users {
                     ID = user.ID,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    MobilePhone = user.MobilePhone,
-                    Passwords = passwordHashed,
-                    Email = user.Email,
-                    DateOfBirth = user.DateOfBirth,
-                    Photo = user.Photo,
-                    UStatus = "פעיל",
-                    Gender = user.Gender,
-                    TotalRate = null,                  
-                    CityCode = db.City.FirstOrDefault(x => x.CityName == user.CityName).CityCode,
                     TokenID = user.TokenID,
+                    Email = user.Email,
+                    UStatus = "פעיל",
+                    TotalRate = null,
+                    Photo = user.Photo,
                 };
+                
+                if (user.HowSigned != "Google" && user.HowSigned != "Facebook")
+                {
+                    if (db.City.Select(x => x.CityName == user.CityName).ToList() == null)
+                    {
+                        db.City.Add(new City { CityName = user.CityName });
+                        db.SaveChanges();
+                    }
+
+                    u.CityCode = db.City.FirstOrDefault(x => x.CityName == user.CityName).CityCode;
+                    u.Passwords = ComputeSha256Hash(user.Passwords);
+                    u.MobilePhone = user.MobilePhone;
+                    u.DateOfBirth = user.DateOfBirth;
+                    u.Gender = user.Gender;
+                }
 
                 db.Users.Add(u);
 
@@ -105,7 +83,13 @@ namespace WebApplication.Controllers
 
                 if (user.VolunteerTypes != null)
                 {
-                    foreach (var item in user.VolunteerTypes)
+                    List<string> typeList = user.VolunteerTypes;
+                    if (user.VolunteerTypes.Contains("כל התחומים"))
+                    {
+                        typeList = db.VolunteerType.Select(x => x.VolunteerName).ToList();
+                    }
+
+                    foreach (var item in typeList)
                     {
                         db.VolTypesPreferences.Add(new VolTypesPreferences
                         {
@@ -114,6 +98,7 @@ namespace WebApplication.Controllers
                             Dummy = false,
                         });
                     }
+
                     db.SaveChanges();
                 }
                 return Ok("OK");
@@ -124,6 +109,50 @@ namespace WebApplication.Controllers
             }
         }
 
+        UserDto UserGet(Users user) {
+
+            return new UserDto
+            {
+                ID = user.ID,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                MobilePhone = user.MobilePhone,
+                Email = user.Email,
+                DateOfBirth = user.DateOfBirth,
+                Photo = user.Photo,
+                Gender = user.Gender,
+                CityName = user.City?.CityName,
+                UserDescription = user.UserDescription,
+                TotalRate = user.TotalRate,
+                Rank = user.Rank,
+                TokenID = user.TokenID,
+                UStatus = user.UStatus,
+                OpenRequests = user.Request.Where(request => request.ID == user.ID && request.RequestStatus == "פעיל").Count(),
+                RegisteredTasks = user.RegisteredTo.Where(task => task.ID == user.ID && task.RegisterStatus == "טרם בוצע").Count(),
+                PastRequests = user.Request.Where(request => request.ID == user.ID && request.RequestStatus == "עבר").Count(),
+                TaskDone = user.RegisteredTo.Where(task => task.ID == user.ID && task.RegisterStatus == "בוצע").Count(),
+            };
+        }
+
+        [Route("searchUser")]
+        [HttpPost]
+        public IHttpActionResult Post([FromBody] string token)
+        {
+            try
+            {
+                DailyHelpMeDbContext db = new DailyHelpMeDbContext();
+                Users user = db.Users.FirstOrDefault(x => x.TokenID == token);
+                if (user != null)
+                {
+                    return Ok(UserGet(user));
+                }
+                return Ok("NO");
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
 
         [Route("getUser")]
         [HttpPost]
@@ -132,25 +161,10 @@ namespace WebApplication.Controllers
             try
             {
                 DailyHelpMeDbContext db = new DailyHelpMeDbContext();
-                Users u = db.Users.FirstOrDefault(x => x.ID == id);
-                if (u != null)
+                Users user = db.Users.FirstOrDefault(x => x.ID == id);
+                if (user != null)
                 {
-                    return Ok(new
-                    {
-                        u.ID,
-                        u.FirstName,
-                        u.LastName,
-                        u.MobilePhone,
-                        u.Email,
-                        u.DateOfBirth,
-                        u.Photo,
-                        u.Gender,
-                        u.City.CityName,
-                        u.TokenID,
-                        u.UserDescription,
-                        u.Rank,
-                        u.TotalRate
-                    });
+                    return Ok(UserGet(user));
                 }
                 return Ok("NO");
             }
@@ -161,7 +175,7 @@ namespace WebApplication.Controllers
         }
 
         static string ComputeSha256Hash(string password)
-        {       
+        {
             using (SHA256 sha256Hash = SHA256.Create())
             {
                 // ComputeHash - returns byte array  
@@ -177,9 +191,10 @@ namespace WebApplication.Controllers
             }
         }
 
+
         [Route("checkIfEmailUsed")]
         [HttpPost]
-        public IHttpActionResult Post([FromBody] string Email)
+        public IHttpActionResult CheckIfEmailUsed([FromBody] string Email)
         {
             try
             {
@@ -198,6 +213,28 @@ namespace WebApplication.Controllers
             }
 
         }
+
+        [Route("getUsersNameAndPhoto")]
+        [HttpPost]
+        public IHttpActionResult CheckPhone([FromBody] List<string> usersEmail)
+        {
+            try
+            {
+                DailyHelpMeDbContext db = new DailyHelpMeDbContext();
+                List<Users> listUser = new List<Users>();
+                usersEmail.ForEach(x =>
+                {
+                    listUser.Add(db.Users.FirstOrDefault(y => y.Email == x));
+                });
+
+                return Ok(listUser);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
+        }
+
 
         [Route("checkIfPhoneUsed")]
         [HttpPost]
@@ -271,7 +308,7 @@ namespace WebApplication.Controllers
         }
 
 
- 
+
 
         [Route("uploadpicture")]
         public Task<HttpResponseMessage> Post()
@@ -315,7 +352,7 @@ namespace WebApplication.Controllers
                                     File.Delete(fileName);
                                 }
                             }
-                        
+
                             File.Copy(item.LocalFileName, Path.Combine(rootPath, newFileName), true);
                             File.Delete(item.LocalFileName);
                             output += " ---here4";
@@ -346,33 +383,74 @@ namespace WebApplication.Controllers
         }
 
 
-
-        [Route("mail")]
+        [Route("setNewPassword")]
         [HttpPost]
-        public IHttpActionResult sendMail([FromBody] string body)
-        { 
-        
+        public IHttpActionResult GetUserEmail([FromBody] Users user)
+        {
             try
             {
-                var email = new MimeMessage();
-                email.From.Add(MailboxAddress.Parse("stuart.smith32@ethereal.email"));
-                email.To.Add(MailboxAddress.Parse("stuart.smith32@ethereal.email"));
-                email.Subject = "Test Email subject";
-                email.Body = new TextPart(TextFormat.Html) { Text = body };
+                DailyHelpMeDbContext db = new DailyHelpMeDbContext();
+                Users u = db.Users.SingleOrDefault(x => x.ID == user.ID);
 
-                var smtp = new SmtpClient();
-                smtp.Connect("smtp.ethereal.email", 587,MailKit.Security.SecureSocketOptions.StartTls);
-                smtp.Authenticate("stuart.smith32@ethereal.email", "w4vTxq7xEKfRaUhFm5");
-                smtp.Send(email);
-                smtp.Disconnect(true);
+                if (u is null)
+                {
+                    return Ok("NO");
+                }
 
-                return Ok("ok");
+                string password = ComputeSha256Hash(user.Passwords);
+
+                u.Passwords = password;
+
+                db.SaveChanges();
+
+                return Ok("OK");
             }
             catch (Exception)
             {
-                return NotFound();
+                return Ok("NO");
             }
+
         }
 
+        [Route("sendMail")]
+        [HttpPost]
+        public IHttpActionResult SendMail([FromBody] string id)
+        {
+
+            try
+            {
+                DailyHelpMeDbContext db = new DailyHelpMeDbContext();
+                Users u = db.Users.SingleOrDefault(x => x.ID == id);
+                if (u is null) {
+                    return Ok("NO");
+                }
+                string email = u.Email;
+                string userName = u.FirstName;
+
+                string code = new Random().Next(1000, 9999).ToString();          
+
+                MailMessage message = new MailMessage(
+                         "DailyHelpMeTeam rupb862022@gmail.com",
+                          email,
+                          "שינוי סיסמא",
+                          $"שלום {userName},\nהקוד לשינוי סיסמה הוא: {code} \n\nאם אינך שלחת בקשה לשינוי סיסמה, אנא התעלם ממייל זה."
+                          );
+
+                var client = new SmtpClient("smtp.gmail.com", 587)
+                {
+                    Credentials = new NetworkCredential("rupb862022@gmail.com", "qymscsvqbdjyeyce"),
+                    EnableSsl = true
+                };
+
+                client.Send(message);
+
+                return Ok(code);
+
+            }
+            catch (Exception e)
+            {
+                return Ok(e.Message);
+            }
+        }
     }
 }

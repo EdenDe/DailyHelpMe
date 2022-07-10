@@ -131,6 +131,7 @@
     </Key>
     <Property Name="VolunteerCode" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="VolunteerName" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Aprroved" Type="bit" />
   </EntityType>
   <Association Name="FK__Intereste__TaskD__11F49EE0">
     <End Role="TaskInDates" Type="Self.TaskInDates" Multiplicity="1" />
